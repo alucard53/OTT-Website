@@ -45,7 +45,7 @@ export default {
         this.substate = this.store.user.substate
         this.plan = this.store.plans[this.store.user.plan]
         this.billing = this.store.billing[this.store.user.billing]
-        this.price = this.store.prices[this.store.user.billing].toString() + (this.billing === 'Monthly' ? '/mo' : '/yr')
+        this.price = this.store.prices[this.store.user.plan].toString() + (this.billing === 'Monthly' ? '/mo' : '/yr')
         this.devices = ""
         this.store.devices[this.store.user.plan].forEach(element => {
             this.devices += element + "+"
