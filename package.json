@@ -1,0 +1,29 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@types/node": "^18.17.3",
+    "mongoose": "^7.4.2",
+    "mongoose-bcrypt": "^1.10.1",
+    "nuxt": "^3.6.5"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.4.11",
+    "@stripe/stripe-js": "^2.0.0",
+    "bootstrap": "^5.3.1",
+    "bootstrap-vue": "^2.23.1",
+    "express": "^4.18.2",
+    "nuxt-stripe-module": "^3.2.0",
+    "pinia": "^2.1.6",
+    "stripe": "^12.17.0"
+  }
+}
