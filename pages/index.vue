@@ -33,7 +33,7 @@
           </label>
         </span>
 
-        <div v-if="this.err.length > 0" style="color: red;">
+        <div v-if="err.length > 0" style="color: red;">
           {{ err }}
         </div>
 
@@ -52,7 +52,7 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      err: "",
+      err: '',
       form: {
         name: '',
         email: '',
