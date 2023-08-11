@@ -42,13 +42,6 @@ import { useSubsData } from '~/stores/myStore';
 export default {
     async created() {
         this.store = useSubsData()
-        // this.data = fetch("/getSub", {
-        //     method: "POST",
-        //     body: {
-        //         mail: this.store.user.mail
-        //     }
-        // })
-        console.log(this.store.user)
         this.substate = this.store.user.substate
         this.plan = this.store.plans[this.store.user.plan]
         this.billing = this.store.billing[this.store.user.billing]
@@ -58,7 +51,6 @@ export default {
             this.devices += element + "+"
         });
 
-        console.log(this.price)
     },
     data() {
         return {

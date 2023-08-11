@@ -133,6 +133,7 @@ export default {
             billing: this.store.sub.billing
           })
         })
+        navigateTo('/dashb')
       }
     }
   }
