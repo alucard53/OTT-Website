@@ -33,8 +33,8 @@
           </label>
         </span>
 
-        <div v-if="this.error.length > 0" style="color: red;">
-          {{ error }}
+        <div v-if="this.err.length > 0" style="color: red;">
+          {{ err }}
         </div>
 
         <input type="submit" value="Sign up" class="Submit">
@@ -52,7 +52,7 @@ export default {
   name: 'IndexPage',
   data() {
     return {
-      error: "",
+      err: "",
       form: {
         name: '',
         email: '',
@@ -63,7 +63,7 @@ export default {
 
   methods: {
     async handleSubmit(event) {
-      this.error = ""
+      this.err = ""
       event.preventDefault()
       console.log(this.form)
       const data = await fetch('/register', {
@@ -75,7 +75,7 @@ export default {
       if (res.status === "OK") {
         navigateTo('/login')
       } else {
-        this.error = res.status
+        this.err = res.status
       }
     }
   }
