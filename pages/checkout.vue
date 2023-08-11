@@ -125,13 +125,20 @@ export default {
       console.log(res.paymentIntent.status)
 
       if (res.paymentIntent.status === "succeeded") {
-        fetch("/storeSub", {
+        const res = await fetch("/storeSub", {
           method: "POST",
           body: JSON.stringify({
             email: this.store.user.email,
             plan: this.store.sub.plan,
             billing: this.store.sub.billing
           })
+        })
+        this.store.setUser({
+          email: this.store.user.email,
+          plan: this.store.sub.plan,
+          substate: "Active",
+          stripeID: this.store.user.stripeID,
+          billing: this.store.sub.billing
         })
         navigateTo('/dashb')
       }

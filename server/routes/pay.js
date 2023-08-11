@@ -36,7 +36,7 @@ export default defineEventHandler(async function (event) {
     customer,
     items: [{ price: price_links[plan][billing] }],
     collection_method: "send_invoice",
-    days_until_due: 1,
+    days_until_due: 30,
   });
 
   const invoice = await stripe.invoices.finalizeInvoice(
