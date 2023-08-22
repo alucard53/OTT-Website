@@ -25,6 +25,10 @@
           </label>
         </span>
 
+        <div v-if="err.length > 0" style="color: red">
+          {{ err }}
+        </div>
+
         <input type="submit" value="Log in" class="Submit">
 
         <p style="font-weight: 500;">
@@ -45,6 +49,7 @@ export default {
 
   data() {
     return {
+      err:"",
       form: {
         email: '',
         password: '',
@@ -69,7 +74,8 @@ export default {
         } else {
           navigateTo('/dashb')
         }
-      }
+      }else{
+        this.err = Data.error;
     }
   }
 }
