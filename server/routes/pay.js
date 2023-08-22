@@ -49,5 +49,5 @@ export default defineEventHandler(async function (event) {
     invoice.payment_intent
   );
 
-  return { secret: paymentIntent.client_secret };
+  return { secret: paymentIntent.client_secret, sub_id: subscription.id };
 });

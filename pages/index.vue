@@ -33,6 +33,8 @@
           </label>
         </span>
 
+        <img v-if="loading" src="loading.gif" width="50" height="50" />
+
         <div v-if="err.length > 0" style="color: red;">
           {{ err }}
         </div>
@@ -58,20 +60,22 @@ export default {
         email: '',
         password: '',
       },
+      loading: false,
     }
   },
 
   methods: {
     async handleSubmit(event) {
-      this.err = ""
       event.preventDefault()
+      this.err = ""
+      this.loading = true
       console.log(this.form)
       const data = await fetch('/register', {
         method: 'POST',
         body: JSON.stringify(this.form)
       })
       const res = await data.json()
-
+      this.loading = false
       if (res.status === "OK") {
         navigateTo('/login')
       } else {

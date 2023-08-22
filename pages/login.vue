@@ -14,7 +14,7 @@
 
         <span class="inputGroup">
           <label for="password" class="label">
-            Password
+            <h1>Password</h1>
           </label>
 
           <input type="password" class="input" v-model="form.password">
@@ -24,6 +24,8 @@
             Remember me
           </label>
         </span>
+
+        <img v-if="loading" src="loading.gif" width="50" height="50" />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
@@ -49,23 +51,25 @@ export default {
 
   data() {
     return {
-      err:"",
+      err: "",
       form: {
         email: '',
         password: '',
-      }
+      },
+      loading: false,
     }
   },
 
   methods: {
     async handleSubmit(event) {
       event.preventDefault()
+      this.loading = true
       const res = await fetch('/doLogin', {
         method: 'POST',
         body: JSON.stringify(this.form)
       })
       const data = await res.json()
-      console.log(data.user)
+      this.loading = false
       if (!data.error) {
         this.store.setUser(data.user)
         console.log(this.store.user)
@@ -74,8 +78,9 @@ export default {
         } else {
           navigateTo('/dashb')
         }
-      }else{
-        this.err = Data.error;
+      } else {
+        this.err = data.error
+      }
     }
   }
 }

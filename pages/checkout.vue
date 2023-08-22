@@ -78,6 +78,7 @@ export default {
       } catch (e) {
         console.log(e)
       }
+
       stripe = await loadStripe('pk_test_51NdU4USA6MDXluwIhzPIPNObKmZBacf8YpRajuzGnmzrV86wsj4Rt2LefbVKqQrb8W3dwmGoAj4TYcz0I6xxLmkW00YHEtJlFA')
 
 

@@ -17,6 +17,7 @@ const schema = new mongoose.Schema({
   substate: { type: String, require: true },
   billing: Number,
   stripeID: { type: String, require: true },
+  subID: { type: String },
   startDate: Date,
 });
 
