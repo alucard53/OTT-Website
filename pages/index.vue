@@ -33,7 +33,7 @@
           </label>
         </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+        <img v-if="loading" src="loading.gif" width="50" height="50" />
 
         <div v-if="err.length > 0" style="color: red;">
           {{ err }}
