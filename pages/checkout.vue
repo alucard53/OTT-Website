@@ -2,9 +2,10 @@
   <div class="page">
     <form class="container">
       <div class="left">
-
         <span class="headingl">Complete Payment</span>
-        <span class="instruc">Enter your credit or debit card details below</span>
+        <span class="instruc"
+          >Enter your credit or debit card details below</span
+        >
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -35,95 +36,96 @@
 </template>
 
 <script>
-import { loadStripe } from '@stripe/stripe-js'
-import { useSubsData } from '~/stores/myStore'
+import { loadStripe } from "@stripe/stripe-js";
+import { useSubsData } from "~/stores/myStore";
 
-let card
-let stripe
-let elements
-let clientSecret
+let card;
+let stripe;
+let elements;
+let clientSecret;
 
 export default {
-
   data() {
     return {
       store: {},
-      plan: '',
-      billing: '',
-      price: 0
-    }
+      plan: "",
+      billing: "",
+      price: 0,
+    };
   },
 
   async created() {
-    this.store = useSubsData()
-    this.plan = this.store.plans[this.store.sub.plan]
-    this.billing = this.store.billing[this.store.sub.billing]
-    this.price = this.store.prices[this.store.sub.plan].toString() + (this.billing === 'Monthly' ? '/mo' : '/yr')
+    this.store = useSubsData();
+    this.plan = this.store.plans[this.store.sub.plan];
+    this.billing = this.store.billing[this.store.sub.billing];
+    this.price =
+      this.store.prices[this.store.sub.plan].toString() +
+      (this.billing === "Monthly" ? "/mo" : "/yr");
   },
-
 
   async mounted() {
     if (this.store.user.stripeID !== "") {
       try {
-        const res = await fetch('/pay', {
-          method: 'POST',
+        const res = await fetch("/pay", {
+          method: "POST",
           body: JSON.stringify({
             plan: this.store.sub.plan,
             billing: this.store.sub.billing,
-            customer: this.store.user.stripeID
-          })
-        })
-        const data = await res.json()
-        clientSecret = data.secret
+            customer: this.store.user.stripeID,
+          }),
+        });
+        const data = await res.json();
+        clientSecret = data.secret;
       } catch (e) {
-        console.log(e)
+        console.log(e);
       }
 
-      stripe = await loadStripe('pk_test_51NdU4USA6MDXluwIhzPIPNObKmZBacf8YpRajuzGnmzrV86wsj4Rt2LefbVKqQrb8W3dwmGoAj4TYcz0I6xxLmkW00YHEtJlFA')
-
+      stripe = await loadStripe(
+        "pk_test_51NdU4USA6MDXluwIhzPIPNObKmZBacf8YpRajuzGnmzrV86wsj4Rt2LefbVKqQrb8W3dwmGoAj4TYcz0I6xxLmkW00YHEtJlFA"
+      );
 
       elements = stripe.elements({
         appearance: {},
-        clientSecret
-      })
+        clientSecret,
+      });
 
-      card = elements.create('card', {
+      card = elements.create("card", {
         hidePostalCode: true,
         style: {
           base: {
-            iconColor: '#777',
-            color: '#32315E',
-            lineHeight: '48px',
+            iconColor: "#777",
+            color: "#32315E",
+            lineHeight: "48px",
             fontWeight: 500,
-            fontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
-            fontSize: '17px',
+            fontFamily:
+              '"Open Sans", "Helvetica Neue", "Helvetica", sans-serif',
+            fontSize: "17px",
 
-            '::placeholder': {
-              color: 'darkgray',
-            }
+            "::placeholder": {
+              color: "darkgray",
+            },
           },
-        }
+        },
       });
-      card.mount('#card-element');
+      card.mount("#card-element");
     }
   },
   methods: {
     async startPayment(event) {
-      event.preventDefault()
+      event.preventDefault();
       if (!stripe || !elements) {
-        console.log('stripe/elems not init')
-        return
+        console.log("stripe/elems not init");
+        return;
       }
 
       const res = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card,
-          billing_details: {
-          }
-        }
-      })
+          billing_details: {},
+        },
+      });
 
-      console.log(res.paymentIntent.status)
+      console.log(res.paymentIntent.status);
 
       if (res.paymentIntent.status === "succeeded") {
         const res = await fetch("/storeSub", {
@@ -131,21 +133,21 @@ export default {
           body: JSON.stringify({
             email: this.store.user.email,
             plan: this.store.sub.plan,
-            billing: this.store.sub.billing
-          })
-        })
+            billing: this.store.sub.billing,
+          }),
+        });
         this.store.setUser({
           email: this.store.user.email,
           plan: this.store.sub.plan,
           substate: "Active",
           stripeID: this.store.user.stripeID,
-          billing: this.store.sub.billing
-        })
-        navigateTo('/dashb')
+          billing: this.store.sub.billing,
+        });
+        navigateTo("/dashb");
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -171,7 +173,6 @@ export default {
   padding: 1%;
 }
 
-
 .headingl {
   font-size: xx-large;
   font-weight: 600;
@@ -183,7 +184,6 @@ export default {
   font-weight: 600;
   margin: 8% 4% 5%;
 }
-
 
 .instruc {
   margin: 1% 4% 0;

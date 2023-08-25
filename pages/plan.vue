@@ -1,21 +1,46 @@
 <template>
   <div class="page">
     <div class="container">
-      <span class="font-bold md:text-3xl mt-5">Choose the right plan for you</span>
+      <span class="font-bold md:text-3xl mt-5"
+        >Choose the right plan for you</span
+      >
       <div class="grid grid-rows-1 grid-flow-row">
         <div class="grid grid-cols-5 mb-8 mt-10">
           <div class="plantype">
             <div class="button">
-              <div class="plantypeOpt" :class="monthly" @click="() => { yearly = ''; monthly = 'sel' }">
+              <div
+                class="plantypeOpt"
+                :class="monthly"
+                @click="
+                  () => {
+                    yearly = '';
+                    monthly = 'sel';
+                  }
+                "
+              >
                 Monthly
               </div>
-              <div class="plantypeOpt" :class="yearly" @click="() => { monthly = ''; yearly = 'sel' }">
+              <div
+                class="plantypeOpt"
+                :class="yearly"
+                @click="
+                  () => {
+                    monthly = '';
+                    yearly = 'sel';
+                  }
+                "
+              >
                 Yearly
               </div>
             </div>
           </div>
-          <div v-for="plan, index in plans" :key="index" class="planbox" @click="changePlan(index)"
-            :class="selPlan[index]">
+          <div
+            v-for="(plan, index) in plans"
+            :key="index"
+            class="planbox"
+            @click="changePlan(index)"
+            :class="selPlan[index]"
+          >
             {{ plan }}
             <div :class="triangle[index]"></div>
           </div>
@@ -26,7 +51,12 @@
             <span class="labeltext">Monthly Price</span>
           </span>
 
-          <span v-for="price, index in prices" :key="index" class="rowvals" :class="selPlan[index]">
+          <span
+            v-for="(price, index) in prices"
+            :key="index"
+            class="rowvals"
+            :class="selPlan[index]"
+          >
             <span class="rowval">{{ price }}</span>
           </span>
         </div>
@@ -36,7 +66,12 @@
             <span class="labeltext">Video Quality</span>
           </span>
 
-          <div v-for="qual, index in vqual" :key="index" class="rowvals" :class="selPlan[index]">
+          <div
+            v-for="(qual, index) in vqual"
+            :key="index"
+            class="rowvals"
+            :class="selPlan[index]"
+          >
             <span class="rowval">{{ qual }}</span>
           </div>
         </div>
@@ -46,7 +81,12 @@
             <span class="labeltext">Resolution</span>
           </span>
 
-          <div v-for="r, index in res" :key="index" class="rowvals" :class="selPlan[index]">
+          <div
+            v-for="(r, index) in res"
+            :key="index"
+            class="rowvals"
+            :class="selPlan[index]"
+          >
             <span class="rowval">{{ r }}</span>
           </div>
         </div>
@@ -56,67 +96,72 @@
             <span class="labeltext">Devices you can use to watch</span>
           </span>
 
-          <div v-for="devs, index in devices" :key="index" class="flex flex-col" :class="selPlan[index]">
-            <span v-for="device, j in devs" :key="j" class="devices"> {{ device }} </span>
+          <div
+            v-for="(devs, index) in devices"
+            :key="index"
+            class="flex flex-col"
+            :class="selPlan[index]"
+          >
+            <span v-for="(device, j) in devs" :key="j" class="devices">
+              {{ device }}
+            </span>
           </div>
         </div>
       </div>
-      <button class="submit" @click="initPayment">
-        Next
-      </button>
+      <button class="submit" @click="initPayment">Next</button>
     </div>
   </div>
 </template>
 
 <script>
-import { useSubsData } from '~/stores/myStore'
+import { useSubsData } from "~/stores/myStore";
 
 export default {
   created() {
-    this.store = useSubsData()
+    this.store = useSubsData();
   },
   data() {
     return {
-      monthly: 'sel',
-      yearly: '',
-      selPlan: ['selplan', 'notsel', 'notsel', 'notsel', 'notsel'],
-      triangle: ['triangle', '', '', ''],
+      monthly: "sel",
+      yearly: "",
+      selPlan: ["selplan", "notsel", "notsel", "notsel"],
+      triangle: ["triangle", "", "", ""],
       plans: [],
       prices: [],
-      vqual: ['Good', 'Good', 'Better', 'Best'],
-      res: ['480p', '480p', '1080p', '4K+HDR'],
+      vqual: ["Good", "Good", "Better", "Best"],
+      res: ["480p", "480p", "1080p", "4K+HDR"],
       devices: [],
-      choice: 0
-    }
+      choice: 0,
+    };
   },
   mounted() {
-    this.plans = this.store.plans
-    this.prices = this.store.prices
-    this.devices = this.store.devices
+    this.plans = this.store.plans;
+    this.prices = this.store.prices;
+    this.devices = this.store.devices;
   },
   methods: {
     initPayment() {
       this.store.setSub({
         plan: this.choice,
-        billing: this.yearly === '' ? 0 : 1
-      })
-      navigateTo('/checkout')
+        billing: this.yearly === "" ? 0 : 1,
+      });
+      navigateTo("/checkout");
     },
 
     changePlan(index) {
       for (let i = 0; i < 4; i++) {
-        this.choice = index
+        this.choice = index;
         if (i == index) {
-          this.selPlan[i] = 'selplan'
-          this.triangle[i] = 'triangle'
+          this.selPlan[i] = "selplan";
+          this.triangle[i] = "triangle";
         } else {
-          this.selPlan[i] = 'notsel'
-          this.triangle[i] = ''
+          this.selPlan[i] = "notsel";
+          this.triangle[i] = "";
         }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -134,7 +179,6 @@ export default {
   margin: 0% 10%;
 }
 
-
 .plantype {
   display: flex;
   justify-content: flex-end;
@@ -151,7 +195,6 @@ export default {
   border-radius: 4rem;
   font-size: large;
 }
-
 
 .plantypeOpt {
   color: white;
@@ -172,7 +215,7 @@ export default {
 }
 
 .notsel {
-  opacity: 0.60;
+  opacity: 0.6;
 }
 
 .planbox {
