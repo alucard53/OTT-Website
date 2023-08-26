@@ -1,55 +1,61 @@
 <template>
-  <div class="page">
-    <div class="container">
-      <form class="form" @submit="handleSubmit">
-        <h2 class="heading">Create Account</h2>
+  <div>
+    <NavbarComponent />
+    <div class="page">
+      <div class="container">
+        <form class="form" @submit="handleSubmit">
+          <h2 class="heading">Create Account</h2>
 
-        <span class="inputGroup">
-          <label for="name" class="label">
-            Name
-          </label>
+          <span class="inputGroup">
+            <label for="name" class="label">
+              Name
+            </label>
 
-          <input type="text" class="input" v-model="form.name" required>
-        </span>
+            <input type="text" class="input" v-model="form.name" required>
+          </span>
 
-        <span class="inputGroup">
-          <label for="email" class="label">
-            Email
-          </label>
+          <span class="inputGroup">
+            <label for="email" class="label">
+              Email
+            </label>
 
-          <input type="email" class="input" v-model="form.email" required>
-        </span>
+            <input type="email" class="input" v-model="form.email" required>
+          </span>
 
-        <span class="inputGroup">
-          <label for="password" class="label">
-            Password
-          </label>
+          <span class="inputGroup">
+            <label for="password" class="label">
+              Password
+            </label>
 
-          <input type="password" class="input" v-model="form.password" required>
+            <input type="password" class="input" v-model="form.password" required>
 
-          <label for="remember_me">
-            <input type="checkbox">
-            Remember me
-          </label>
-        </span>
+            <label for="remember_me">
+              <input type="checkbox">
+              Remember me
+            </label>
+          </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
-        <div v-if="err.length > 0" style="color: red;">
-          {{ err }}
-        </div>
+          <div v-if="err.length > 0" style="color: red;">
+            {{ err }}
+          </div>
 
-        <input type="submit" value="Sign up" class="Submit">
+          <input type="submit" value="Sign up" class="Submit">
 
-        <p style="font-weight: 500;">
-          Already have an account? <NuxtLink to="/login" style="color: #1f4c90;">Log In</NuxtLink>
-        </p>
-      </form>
+          <p style="font-weight: 500;">
+            Already have an account? <NuxtLink to="/login" style="color: #1f4c90;">Log In</NuxtLink>
+          </p>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+
+import NavbarComponent from '~/components/NavbarComponent.vue'
+
 export default {
   name: 'IndexPage',
   data() {
