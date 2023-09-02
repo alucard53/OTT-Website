@@ -7,44 +7,49 @@
           <h2 class="heading">Create Account</h2>
 
           <span class="inputGroup">
-            <label for="name" class="label">
-              Name
-            </label>
+            <label for="name" class="label"> Name </label>
 
-            <input type="text" class="input" v-model="form.name" required>
+            <input type="text" class="input" v-model="form.name" required />
           </span>
 
           <span class="inputGroup">
-            <label for="email" class="label">
-              Email
-            </label>
+            <label for="email" class="label"> Email </label>
 
-            <input type="email" class="input" v-model="form.email" required>
+            <input type="email" class="input" v-model="form.email" required />
           </span>
 
           <span class="inputGroup">
-            <label for="password" class="label">
-              Password
-            </label>
+            <label for="password" class="label"> Password </label>
 
-            <input type="password" class="input" v-model="form.password" required>
+            <input
+              type="password"
+              class="input"
+              v-model="form.password"
+              required
+            />
 
             <label for="remember_me">
-              <input type="checkbox">
+              <input type="checkbox" />
               Remember me
             </label>
           </span>
 
-          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+          <img
+            v-if="loading"
+            src="../public/loading.gif"
+            width="50"
+            height="50"
+          />
 
-          <div v-if="err.length > 0" style="color: red;">
+          <div v-if="err.length > 0" style="color: red">
             {{ err }}
           </div>
 
-          <input type="submit" value="Sign up" class="Submit">
+          <input type="submit" value="Sign up" class="Submit" />
 
-          <p style="font-weight: 500;">
-            Already have an account? <NuxtLink to="/login" style="color: #1f4c90;">Log In</NuxtLink>
+          <p style="font-weight: 500">
+            Already have an account?
+            <NuxtLink to="/login" style="color: #1f4c90">Log In</NuxtLink>
           </p>
         </form>
       </div>
@@ -53,43 +58,40 @@
 </template>
 
 <script>
-
-import NavbarComponent from '~/components/NavbarComponent.vue'
-
 export default {
-  name: 'IndexPage',
+  name: "IndexPage",
   data() {
     return {
-      err: '',
+      err: "",
       form: {
-        name: '',
-        email: '',
-        password: '',
+        name: "",
+        email: "",
+        password: "",
       },
       loading: false,
-    }
+    };
   },
 
   methods: {
     async handleSubmit(event) {
-      event.preventDefault()
-      this.err = ""
-      this.loading = true
-      console.log(this.form)
-      const data = await fetch('/register', {
-        method: 'POST',
-        body: JSON.stringify(this.form)
-      })
-      const res = await data.json()
-      this.loading = false
+      event.preventDefault();
+      this.err = "";
+      this.loading = true;
+      console.log(this.form);
+      const data = await fetch("/register", {
+        method: "POST",
+        body: JSON.stringify(this.form),
+      });
+      const res = await data.json();
+      this.loading = false;
       if (res.status === "OK") {
-        navigateTo('/login')
+        navigateTo("/login");
       } else {
-        this.err = res.status
+        this.err = res.status;
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
