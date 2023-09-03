@@ -21,12 +21,7 @@
           <span class="inputGroup">
             <label for="password" class="label"> Password </label>
 
-            <input
-              type="password"
-              class="input"
-              v-model="form.password"
-              required
-            />
+            <input type="password" class="input" v-model="form.password" required />
 
             <label for="remember_me">
               <input type="checkbox" />
@@ -34,12 +29,7 @@
             </label>
           </span>
 
-          <img
-            v-if="loading"
-            src="../public/loading.gif"
-            width="50"
-            height="50"
-          />
+          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
           <div v-if="err.length > 0" style="color: red">
             {{ err }}
@@ -78,16 +68,21 @@ export default {
       this.err = "";
       this.loading = true;
       console.log(this.form);
-      const data = await fetch("/register", {
+      const data = await fetch("http://127.0.0.1:6969/register", {
         method: "POST",
         body: JSON.stringify(this.form),
+        headers: {
+          "Content-Type": "application/json"
+        }
       });
-      const res = await data.json();
-      this.loading = false;
-      if (res.status === "OK") {
+
+      this.loading = false
+      if (data.status === 200) {
         navigateTo("/login");
+      } else if (data.status === 400) {
+        this.err = "Invalid credentials"
       } else {
-        this.err = res.status;
+        this.err = "Server error, try again later"
       }
     },
   },
