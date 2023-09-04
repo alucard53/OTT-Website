@@ -38,11 +38,11 @@
 </template>
 
 <script>
-import { useSubsData } from "~/stores/myStore";
+import { userStore } from "~/stores/userStore";
 
 export default {
   async created() {
-    this.store = useSubsData();
+    this.store = userStore();
     this.substate = this.store.user.substate;
     this.plan = this.store.plans[this.store.user.plan];
     this.billing = this.store.billing[this.store.user.billing];

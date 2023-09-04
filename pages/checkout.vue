@@ -34,8 +34,9 @@
 </template>
 
 <script>
+
 import { loadStripe } from "@stripe/stripe-js";
-import { useSubsData } from "~/stores/myStore";
+import { userStore } from "~/stores/userStore";
 
 let card;
 let stripe;
@@ -53,7 +54,7 @@ export default {
   },
 
   async created() {
-    this.store = useSubsData();
+    this.store = userStore();
     this.plan = this.store.plans[this.store.sub.plan];
     this.billing = this.store.billing[this.store.sub.billing];
     this.price =

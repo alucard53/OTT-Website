@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 
-export const useSubsData = defineStore("subsData", {
+export const userStore = defineStore("userStore", {
   state: () => {
     let sub = {
       plan: 0,
@@ -21,7 +21,7 @@ export const useSubsData = defineStore("subsData", {
       prices: [100, 200, 500, 700],
       devices: [
         ["Phone", "Tablet"],
-        ["Phone", "Tablet", "Computer", "TV"],
+        ["Phone", "Tablet", "Computer"],
         ["Phone", "Tablet", "Computer", "TV"],
         ["Phone", "Tablet", "Computer", "TV"],
       ],
@@ -41,5 +41,8 @@ export const useSubsData = defineStore("subsData", {
       this.user.stripeID = newUser.stripeID;
       this.user.billing = newUser.billing;
     },
+  },
+  persist: {
+    storage: persistedState.localStorage,
   },
 });

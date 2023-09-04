@@ -8,7 +8,8 @@ export default defineNuxtConfig({
     },
     modules: [
         '@nuxtjs/tailwindcss',
-        '@pinia/nuxt'
+        '@pinia/nuxt',
+        '@pinia-plugin-persistedstate/nuxt'
     ],
     runtimeConfig: {
         mongoUrl: "mongodb+srv://alucard23:Tr0069er@testcluster.aywezys.mongodb.net/?retryWrites=true&w=majority",

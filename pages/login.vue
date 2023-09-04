@@ -42,11 +42,11 @@
 </template>
 
 <script>
-import { useSubsData } from '~/stores/myStore'
+import { userStore } from '~/stores/userStore'
 
 export default {
   created() {
-    this.store = useSubsData()
+    this.store = userStore()
   },
 
   data() {
