@@ -19,6 +19,8 @@ yarn install
 
 ## Development Server
 
+<b>Start backend first</b>
+
 Start the development server on `http://localhost:3000`:
 
 ```bash
