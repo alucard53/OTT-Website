@@ -71,7 +71,7 @@ export default {
           body: JSON.stringify({
             plan: this.store.sub.plan,
             billing: this.store.sub.billing,
-            customer: this.store.user.stripeID,
+            email: this.store.user.email,
           }),
           headers: {
             "Content-Type": "application/json"
@@ -150,7 +150,6 @@ export default {
           email: this.store.user.email,
           plan: this.store.sub.plan,
           substate: "Active",
-          stripeID: this.store.user.stripeID,
           billing: this.store.sub.billing,
         });
         navigateTo("/dashb");
