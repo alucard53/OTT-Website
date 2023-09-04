@@ -3,9 +3,7 @@
     <form class="container">
       <div class="left">
         <span class="headingl">Complete Payment</span>
-        <span class="instruc"
-          >Enter your credit or debit card details below</span
-        >
+        <span class="instruc">Enter your credit or debit card details below</span>
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -66,16 +64,24 @@ export default {
   async mounted() {
     if (this.store.user.stripeID !== "") {
       try {
-        const res = await fetch("/pay", {
+        console.log(this.store.sub.plan, this.store.sub.billing, this.store.user.stripeID)
+        const res = await fetch("http://localhost:6969/pay", {
           method: "POST",
           body: JSON.stringify({
             plan: this.store.sub.plan,
             billing: this.store.sub.billing,
             customer: this.store.user.stripeID,
           }),
+          headers: {
+            "Content-Type": "application/json"
+          }
         });
-        const data = await res.json();
-        clientSecret = data.secret;
+        if (res.status === 500) {
+          console.log("Error in creating subscription")
+        } else {
+          const data = await res.json();
+          clientSecret = data.secret;
+        }
       } catch (e) {
         console.log(e);
       }
@@ -128,13 +134,16 @@ export default {
       console.log(res.paymentIntent.status);
 
       if (res.paymentIntent.status === "succeeded") {
-        const res = await fetch("/storeSub", {
+        const res = await fetch("http://localhost:6969/store", {
           method: "POST",
           body: JSON.stringify({
             email: this.store.user.email,
             plan: this.store.sub.plan,
             billing: this.store.sub.billing,
           }),
+          headers: {
+            "Content-Type": "application/json",
+          }
         });
         this.store.setUser({
           email: this.store.user.email,
