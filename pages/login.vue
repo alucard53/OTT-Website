@@ -5,11 +5,9 @@
         <h2 class="heading">Log in to your account</h2>
 
         <span class="inputGroup">
-          <label for="email" class="label">
-            Email
-          </label>
+          <label for="email" class="label"> Email </label>
 
-          <input type="text" class="input" v-model="form.email">
+          <input type="text" class="input" v-model="form.email" />
         </span>
 
         <span class="inputGroup">
@@ -17,24 +15,30 @@
             <h1>Password</h1>
           </label>
 
-          <input type="password" class="input" v-model="form.password">
+          <input type="password" class="input" v-model="form.password" />
 
           <label for="remember_me">
-            <input type="checkbox">
+            <input type="checkbox" />
             Remember me
           </label>
         </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+        <img
+          v-if="loading"
+          src="../public/loading.gif"
+          width="50"
+          height="50"
+        />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
         </div>
 
-        <input type="submit" value="Log in" class="Submit">
+        <input type="submit" value="Log in" class="Submit" />
 
-        <p style="font-weight: 500;">
-          New to My-App? <NuxtLink to="/" style="color: #1f4c90;">Sign In</NuxtLink>
+        <p style="font-weight: 500">
+          New to My-App?
+          <NuxtLink to="/" style="color: #1f4c90">Sign In</NuxtLink>
         </p>
       </form>
     </div>
@@ -42,48 +46,58 @@
 </template>
 
 <script>
-import { userStore } from '~/stores/userStore'
+import { userStore } from "~/stores/userStore";
 
 export default {
   created() {
-    this.store = userStore()
+    this.store = userStore();
   },
 
   data() {
     return {
       err: "",
       form: {
-        email: '',
-        password: '',
+        email: "",
+        password: "",
       },
       loading: false,
-    }
+    };
   },
 
   methods: {
     async handleSubmit(event) {
-      event.preventDefault()
-      this.loading = true
-      const res = await fetch('/doLogin', {
-        method: 'POST',
-        body: JSON.stringify(this.form)
-      })
-      const data = await res.json()
-      this.loading = false
-      if (!data.error) {
-        this.store.setUser(data.user)
-        console.log(this.store.user)
-        if (this.store.user.substate === 'None') {
-          navigateTo('/plan')
-        } else {
-          navigateTo('/dashb')
-        }
+      event.preventDefault();
+      this.err = ";";
+      this.loading = true;
+
+      const data = await fetch("http://localhost:6969/login", {
+        method: "Post",
+        body: JSON.stringify(this.form),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      this.loading = false;
+      if (data.status === 404) {
+        console.log("User not found");
+        this.err = "User not found";
+      } else if (data.status === 400) {
+        console.log("Incorrect password");
+        this.err = "Incorrect password";
       } else {
-        this.err = data.error
+        const userData = await data.json();
+        this.store.setUser(userData.user);
+        console.log(this.store.user);
+        if (this.store.user.substate === "None") {
+          navigateTo("/plan");
+        } else {
+          navigateTo("/dashb");
+        }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
