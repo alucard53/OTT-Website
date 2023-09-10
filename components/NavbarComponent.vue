@@ -30,7 +30,7 @@
         <li><button @click="handleLogIn">Log In</button></li>
       </ul>
     </nav>
-    <div class="">
+    <div class="" v-else>
       <h3>{{ username }}</h3>
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +59,11 @@ export default {
   mounted() {
     this.store = userStore();
     this.username = this.store.user.name;
-    this.mounted = true;
+    if (this.username === "") {
+      this.mounted = false;
+    } else {
+      this.mounted = true;
+    }
     console.log(this.store);
   },
   data() {
