@@ -23,12 +23,7 @@
           </label>
         </span>
 
-        <img
-          v-if="loading"
-          src="../public/loading.gif"
-          width="50"
-          height="50"
-        />
+        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
@@ -87,8 +82,9 @@ export default {
         this.err = "Incorrect password";
       } else {
         const userData = await data.json();
-        this.store.setUser(userData.user);
-        console.log(this.store.user);
+        console.log(userData)
+        this.store.setUser(userData);
+        console.log("user", this.store.user);
         if (this.store.user.substate === "None") {
           navigateTo("/plan");
         } else {

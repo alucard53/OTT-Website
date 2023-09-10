@@ -155,7 +155,6 @@ export default {
           email: this.store.user.email,
           plan: this.store.sub.plan,
           substate: "Active",
-          stripeID: this.store.user.stripeID,
           billing: this.store.sub.billing,
         });
         navigateTo("/dashb");

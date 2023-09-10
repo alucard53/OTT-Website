@@ -8,11 +8,11 @@ export const userStore = defineStore("userStore", {
     };
 
     let user = {
+      name: "",
       email: "",
       plan: 0,
       substate: "None",
       billing: 0,
-      stripeID: "",
       startData: "",
     };
 
@@ -35,10 +35,10 @@ export const userStore = defineStore("userStore", {
       this.sub = newSub;
     },
     setUser(newUser) {
+      this.user.name = newUser.name;
       this.user.email = newUser.email;
       this.user.plan = newUser.plan;
       this.user.substate = newUser.substate;
-      this.user.stripeID = newUser.stripeID;
       this.user.billing = newUser.billing;
     },
   },
