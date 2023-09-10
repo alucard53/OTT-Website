@@ -67,7 +67,7 @@ export default {
   methods: {
     async handleSubmit(event) {
       event.preventDefault();
-      this.err = ";";
+      this.err = "";
       this.loading = true;
 
       const data = await fetch("http://localhost:6969/login", {

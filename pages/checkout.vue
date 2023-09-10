@@ -3,7 +3,9 @@
     <form class="container">
       <div class="left">
         <span class="headingl">Complete Payment</span>
-        <span class="instruc">Enter your credit or debit card details below</span>
+        <span class="instruc"
+          >Enter your credit or debit card details below</span
+        >
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -34,7 +36,6 @@
 </template>
 
 <script>
-
 import { loadStripe } from "@stripe/stripe-js";
 import { userStore } from "~/stores/userStore";
 
@@ -65,20 +66,24 @@ export default {
   async mounted() {
     if (this.store.user.stripeID !== "") {
       try {
-        console.log(this.store.sub.plan, this.store.sub.billing, this.store.user.stripeID)
+        console.log(
+          this.store.sub.plan,
+          this.store.sub.billing,
+          this.store.user.stripeID
+        );
         const res = await fetch("http://localhost:6969/pay", {
           method: "POST",
           body: JSON.stringify({
             plan: this.store.sub.plan,
             billing: this.store.sub.billing,
-            customer: this.store.user.stripeID,
+            email: this.store.user.email,
           }),
           headers: {
-            "Content-Type": "application/json"
-          }
+            "Content-Type": "application/json",
+          },
         });
         if (res.status === 500) {
-          console.log("Error in creating subscription")
+          console.log("Error in creating subscription");
         } else {
           const data = await res.json();
           clientSecret = data.secret;
@@ -144,7 +149,7 @@ export default {
           }),
           headers: {
             "Content-Type": "application/json",
-          }
+          },
         });
         this.store.setUser({
           email: this.store.user.email,

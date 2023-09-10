@@ -26,14 +26,15 @@
 
     <nav>
       <ul class="nav_link">
-        <li><button>Sign In</button></li>
-        <li><button>Log In</button></li>
+        <li><button @click="handleSignUp">Sign Up</button></li>
+        <li><button @click="handleLogIn">Log In</button></li>
       </ul>
     </nav>
   </div>
 </template>
 
 <script>
+// import register from "../pages/index.vue";
 export default {
   name: "NavbarComponent",
   data() {
@@ -45,6 +46,12 @@ export default {
     handleSubmit(event) {
       event.preventDefault();
       navigateTo(`/search?q=${this.query}`);
+    },
+    handleSignUp() {
+      navigateTo();
+    },
+    handleLogIn() {
+      navigateTo("/login");
     },
   },
 };
