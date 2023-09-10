@@ -1,7 +1,7 @@
 <template>
   <NavbarComponent />
-  <div class="grid grid-cols-3 gap-4 m-5" @submit="handleSearch">
-    <div class="box" v-for="movie in handleSearch" :key="movie.id">
+  <div class="grid grid-cols-3 gap-4 m-5">
+    <div class="box" v-for="movie in filteredMovies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
       <!-- <div v-for="det in movie" :key="det">{{ det }}</div> -->
@@ -22,53 +22,39 @@
 
 <script>
 export default {
-  mounted() {
+  async mounted() {
     console.log(this.$route.query);
+    const data = await fetch("http://localhost:6969/movies", {
+      method: "Get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    this.movies = await data.json();
   },
   data() {
     return {
-      movies: {
-        id: "",
-        title: "",
-        genre: "",
-        director: "",
-        year: "",
-        desc: "",
-      },
+      movies: [],
     };
   },
-  methods: {
-    async handleSearch(event) {
-      event.preventDefault();
-
-      const data = await fetch("http://localhost:6969/movies", {
-        method: "Post",
-        body: JSON.stringify(this.movies),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (
-        this.title ===
-        data.title
-          .toLowerCase()
-          .includes(this.$route.query.q.toLocaleLowerCase())
-      ) {
-        const movie = await data.json();
-        console.log(movie);
-        res.write(movie);
-      }
-    },
-  },
-  // computed: {
-  //   filteredMovies() {
-  //     // return this.movies.filter((movie) => movie.title === "Forest of Love");
-  //     return this.movies.filter((movie) =>
-  //       movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
-  //     );
+  // methods: {
+  //   async handleSearch() {
+  //     const data = await fetch("http://localhost:6969/movies", {
+  //       method: "Get",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     });
   //   },
   // },
+  computed: {
+    filteredMovies() {
+      // return this.movies.filter((movie) => movie.title === "Forest of Love");
+      return this.movies.filter((movie) =>
+        movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
+      );
+    },
+  },
 };
 </script>
 
