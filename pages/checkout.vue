@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent />
   <div class="page">
     <form class="container">
       <div class="left">

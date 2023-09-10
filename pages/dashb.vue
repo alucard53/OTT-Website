@@ -1,4 +1,5 @@
 <template>
+  <NavbarComponent />
   <div class="page">
     <div class="flex flex-col bg-white rounded-md">
       <div class="flex flex-row">
@@ -8,8 +9,10 @@
           </span>
         </div>
         <div class="flex justify-start">
-          <button type="button"
-            class="inline-block rounded bg-primary mx-3 my-4 px-2 pb-1.5 pt-1.5 text-xs font-medium bg-blue-400">
+          <button
+            type="button"
+            class="inline-block rounded bg-primary mx-3 my-4 px-2 pb-1.5 pt-1.5 text-xs font-medium bg-blue-400"
+          >
             {{ substate }}
           </button>
           <div class="flex w-3/6 ml-60 mr-5 justify-end items-center">
@@ -29,7 +32,9 @@
         ₹ {{ price }}
       </div>
       <div class="flex flex-row ml-5 mb-2">
-        <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2">
+        <button
+          class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2"
+        >
           Cancel Plan
         </button>
       </div>
@@ -41,7 +46,7 @@
 import { userStore } from "~/stores/userStore";
 
 export default {
-  async created() {
+  async mounted() {
     this.store = userStore();
     this.substate = this.store.user.substate;
     this.plan = this.store.plans[this.store.user.plan];
