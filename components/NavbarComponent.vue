@@ -30,7 +30,7 @@
         <li><button @click="handleLogIn">Log In</button></li>
       </ul>
     </nav>
-    <div class="" v-else>
+    <div v-else>
       <h3>{{ username }}</h3>
       <svg
         xmlns="http://www.w3.org/2000/svg"

@@ -18,7 +18,10 @@ export const userStore = defineStore("userStore", {
 
     return {
       plans: ["Mobile", "Basic", "Standard", "Premium"],
-      prices: [100, 200, 500, 700],
+      prices: [
+        [100, 200, 500, 700],
+        [1000, 2000, 5000, 7000],
+      ],
       devices: [
         ["Phone", "Tablet"],
         ["Phone", "Tablet", "Computer"],

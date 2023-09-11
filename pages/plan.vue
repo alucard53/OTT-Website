@@ -34,7 +34,8 @@
             <span class="labeltext">Monthly Price</span>
           </span>
 
-          <span v-for="(price, index) in prices" :key="index" class="rowvals" :class="selPlan[index]">
+          <span v-for="(price, index) in prices[yearly === '' ? 0 : 1]" :key="index" class="rowvals"
+            :class="selPlan[index]">
             <span class="rowval">{{ price }}</span>
           </span>
         </div>

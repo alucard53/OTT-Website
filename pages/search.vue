@@ -4,8 +4,6 @@
     <div class="box" v-for="movie in filteredMovies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
-      <!-- <div v-for="det in movie" :key="det">{{ det }}</div> -->
-
       <h3><b>Title: </b> {{ movie.title }}</h3>
       <br />
       <h4><b>Description: </b> {{ movie.desc }}</h4>
@@ -30,26 +28,20 @@ export default {
         "Content-Type": "application/json",
       },
     });
-    this.movies = await data.json();
+
+    if (data.status != 200) {
+      console.log("Error in fetching movies data from db")
+    } else {
+      this.movies = await data.json();
+    }
   },
   data() {
     return {
       movies: [],
     };
   },
-  // methods: {
-  //   async handleSearch() {
-  //     const data = await fetch("http://localhost:6969/movies", {
-  //       method: "Get",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //     });
-  //   },
-  // },
   computed: {
     filteredMovies() {
-      // return this.movies.filter((movie) => movie.title === "Forest of Love");
       return this.movies.filter((movie) =>
         movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
       );
@@ -67,6 +59,7 @@ export default {
   width: 100%;
   padding: 10px;
 }
+
 .box .img {
   display: flex;
   align-items: center;
