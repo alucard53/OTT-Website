@@ -85,6 +85,33 @@ export default {
         console.log(data)
         this.store.setUser(data);
 
+        /*TODO
+
+        *reading*
+          check 
+          check /login backend route to see how jwt sent to frontend on successful login
+          check userStore.js to see how jwt is being stored in frontend (this.store.user.token)
+
+        *task*
+          instead of checking substate from frontend in if condition below, make a GET api call to /checkSub
+          INCLUDE JWT TOKEN in GET request header
+          make new backend route /checkSub
+
+            *in backend /checkSub route*
+
+              1) Decrypt jwt, and make api call to db to fetch user by email inside jwt payload
+                - If users does not exist return 404 status only, no body
+              2) If user exists, check user.substate
+                - if substate is active return 200 status only, no body
+                - if substate is none return 400 status only, no body
+
+            *frontend*
+
+              - If status of response is 200 navigate to /dashb
+              - Else navigate to /
+
+        */
+
         if (this.store.user.substate === "None") {
           navigateTo("/plan");
         } else {
