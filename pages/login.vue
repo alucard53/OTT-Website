@@ -65,7 +65,7 @@ export default {
       this.err = "";
       this.loading = true;
 
-      const data = await fetch("http://localhost:6969/login", {
+      const res = await fetch("http://localhost:6969/login", {
         method: "Post",
         body: JSON.stringify(this.form),
         headers: {
@@ -74,17 +74,17 @@ export default {
       });
 
       this.loading = false;
-      if (data.status === 404) {
-        console.log("User not found");
+
+      if (res.status === 404) {
         this.err = "User not found";
-      } else if (data.status === 400) {
-        console.log("Incorrect password");
+      } else if (res.status === 400) {
         this.err = "Incorrect password";
       } else {
-        const userData = await data.json();
-        console.log(userData)
-        this.store.setUser(userData);
-        console.log("user", this.store.user);
+
+        const data = await res.json();
+        console.log(data)
+        this.store.setUser(data);
+
         if (this.store.user.substate === "None") {
           navigateTo("/plan");
         } else {

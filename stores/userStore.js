@@ -11,6 +11,7 @@ export const userStore = defineStore("userStore", {
       name: "",
       email: "",
       plan: 0,
+      token: "",
       substate: "None",
       billing: 0,
       startData: "",
@@ -40,6 +41,7 @@ export const userStore = defineStore("userStore", {
     setUser(newUser) {
       this.user.name = newUser.name;
       this.user.email = newUser.email;
+      this.user.token = newUser.token;
       this.user.plan = newUser.plan;
       this.user.substate = newUser.substate;
       this.user.billing = newUser.billing;
