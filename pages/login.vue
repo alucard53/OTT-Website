@@ -23,7 +23,12 @@
           </label>
         </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+        <img
+          v-if="loading"
+          src="../public/loading.gif"
+          width="50"
+          height="50"
+        />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
@@ -80,11 +85,23 @@ export default {
       } else if (res.status === 400) {
         this.err = "Incorrect password";
       } else {
-
         const data = await res.json();
-        console.log(data)
+        console.log(data);
         this.store.setUser(data);
 
+        const data1 = fetch("http://localhost:6969/checkSub", {
+          headers: {
+            authorization: `Bearer ${this.store.user.token}`,
+          },
+        });
+
+        if (data1.status === 200) {
+          navigateTo("/plan");
+        } else {
+          navigateTo("/dashb");
+        }
+
+        // doFetch();
         /*TODO
 
         *reading*
@@ -112,11 +129,21 @@ export default {
 
         */
 
-        if (this.store.user.substate === "None") {
-          navigateTo("/plan");
-        } else {
-          navigateTo("/dashb");
-        }
+        // function doFetch() {
+        //   const data =
+        //     ("http://localhost:6969/checkSub",
+        //     {
+        //       headers: {
+        //         authorization: `Bearer ${this.store.user.token}`,
+        //       },
+        //     });
+
+        //   if (data.status === 200) {
+        //     navigateTo("/plan");
+        //   } else {
+        //     navigateTo("/dashb");
+        //   }
+        // }
       }
     },
   },
