@@ -81,7 +81,6 @@ export default {
         this.err = "Incorrect password";
       } else {
         const data = await res.json();
-        console.log("Data", data);
         this.store.setUser(data);
 
         const data1 = await fetch("http://localhost:6969/checkSub", {
@@ -89,8 +88,6 @@ export default {
             Authorization: `Bearer ${this.store.user.token}`,
           },
         });
-
-        console.log("Data1", data1)
 
         if (data1.status === 200) {
           navigateTo("/dashb");
