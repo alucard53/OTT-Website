@@ -4,9 +4,7 @@
     <form class="container">
       <div class="left">
         <span class="headingl">Complete Payment</span>
-        <span class="instruc"
-          >Enter your credit or debit card details below</span
-        >
+        <span class="instruc">Enter your credit or debit card details below</span>
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -137,8 +135,6 @@ export default {
           billing_details: {},
         },
       });
-
-      console.log(res.paymentIntent.status);
 
       if (res.paymentIntent.status === "succeeded") {
         const res = await fetch("http://localhost:6969/store", {

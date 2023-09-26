@@ -39,7 +39,25 @@ export const userStore = defineStore("userStore", {
       this.sub = newSub;
     },
     setUser(newUser) {
-      this.user.name = newUser.name;
+
+      console.log(newUser)
+
+      if (!newUser) {
+        this.user = {
+          name: "",
+          email: "",
+          plan: 0,
+          token: "",
+          substate: "None",
+          billing: 0,
+          startData: "",
+        }
+        return
+      }
+
+      if (this.user.name === '') {
+        this.user.name = newUser.name;
+      }
       this.user.email = newUser.email;
       this.user.token = newUser.token;
       this.user.plan = newUser.plan;

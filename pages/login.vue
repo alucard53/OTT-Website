@@ -23,12 +23,7 @@
           </label>
         </span>
 
-        <img
-          v-if="loading"
-          src="../public/loading.gif"
-          width="50"
-          height="50"
-        />
+        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
@@ -86,64 +81,23 @@ export default {
         this.err = "Incorrect password";
       } else {
         const data = await res.json();
-        console.log(data);
+        console.log("Data", data);
         this.store.setUser(data);
 
-        const data1 = fetch("http://localhost:6969/checkSub", {
+        const data1 = await fetch("http://localhost:6969/checkSub", {
           headers: {
-            authorization: `Bearer ${this.store.user.token}`,
+            Authorization: `Bearer ${this.store.user.token}`,
           },
         });
 
+        console.log("Data1", data1)
+
         if (data1.status === 200) {
-          navigateTo("/plan");
-        } else {
           navigateTo("/dashb");
+        } else {
+          navigateTo("/plan");
         }
 
-        // doFetch();
-        /*TODO
-
-        *reading*
-          check 
-          check /login backend route to see how jwt sent to frontend on successful login
-          check userStore.js to see how jwt is being stored in frontend (this.store.user.token)
-
-        *task*
-          instead of checking substate from frontend in if condition below, make a GET api call to /checkSub
-          INCLUDE JWT TOKEN in GET request header
-          make new backend route /checkSub
-
-            *in backend /checkSub route*
-
-              1) Decrypt jwt, and make api call to db to fetch user by email inside jwt payload
-                - If users does not exist return 404 status only, no body
-              2) If user exists, check user.substate
-                - if substate is active return 200 status only, no body
-                - if substate is none return 400 status only, no body
-
-            *frontend*
-
-              - If status of response is 200 navigate to /dashb
-              - Else navigate to /
-
-        */
-
-        // function doFetch() {
-        //   const data =
-        //     ("http://localhost:6969/checkSub",
-        //     {
-        //       headers: {
-        //         authorization: `Bearer ${this.store.user.token}`,
-        //       },
-        //     });
-
-        //   if (data.status === 200) {
-        //     navigateTo("/plan");
-        //   } else {
-        //     navigateTo("/dashb");
-        //   }
-        // }
       }
     },
   },
