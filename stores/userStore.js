@@ -40,8 +40,6 @@ export const userStore = defineStore("userStore", {
     },
     setUser(newUser) {
 
-      console.log(newUser)
-
       if (!newUser) {
         this.user = {
           name: "",

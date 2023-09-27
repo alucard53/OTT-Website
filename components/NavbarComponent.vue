@@ -28,8 +28,8 @@
       </svg>
       <div class="dropItems">
         <button @click="() => navigateTo('/dash')" class="dropButton">Account</button>
+        <button @click="() => navigateTo('/watchlater')" class="dropButton">Watch Later</button>
         <button @click="logout" class="dropButton">Log out</button>
-        <button @click="() => navigateTo('/watchlater')" class="dropButton">Log out</button>
       </div>
     </div>
   </div>
@@ -44,8 +44,6 @@ export default {
   beforeMount() {
     this.store = userStore();
     this.username = this.store.user.name;
-
-    console.log(this.store.user);
 
     if (this.username === "") {
       this.mounted = false;
