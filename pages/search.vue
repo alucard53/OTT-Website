@@ -1,7 +1,7 @@
 <template>
   <NavbarComponent />
   <div class="grid grid-cols-3 gap-4 m-5">
-    <div class="box" v-for="movie, index in filteredMovies" :key="movie.id">
+    <div class="box" v-for="(movie, index) in filteredMovies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
       <h3><b>Title: </b> {{ movie.title }}</h3>
@@ -14,23 +14,30 @@
       <br />
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchlater">Watch
-        later</button>
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
-        @click="addWatch(index)">Add
-        to Watch
-        later</button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        v-if="movie.watchlater"
+      >
+        Watch later
+      </button>
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        v-else
+        @click="addWatch(index)"
+      >
+        Add to Watch later
+      </button>
       <br />
     </div>
   </div>
 </template>
 
 <script>
-import { userStore } from '~/stores/userStore';
+import { userStore } from "~/stores/userStore";
 
 export default {
-  async created() {
-    this.store = userStore()
+  async mounted() {
+    this.store = userStore();
     console.log(this.$route.query);
     const data = await fetch("http://localhost:6969/movies", {
       method: "Get",
@@ -40,21 +47,24 @@ export default {
     });
 
     if (data.status != 200) {
-      console.log("Error in fetching movies data from db")
+      console.log("Error in fetching movies data from db");
     } else {
       this.movies = await data.json();
 
       for (let i in this.movies) {
-        const res = await fetch(`http://localhost:6969/checkWatch?movie=${this.movies[i].id}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email: this.store.user.email })
-        })
+        const res = await fetch(
+          `http://localhost:6969/checkWatch?movie=${this.movies[i].id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: this.store.user.email }),
+          }
+        );
 
         if (res.status === 200) {
-          this.movies[i].watchlater = true
+          this.movies[i].watchlater = true;
         }
       }
     }
@@ -66,18 +76,20 @@ export default {
   },
   methods: {
     async addWatch(i) {
-      this.movies[i].watchlater = true
+      this.movies[i].watchlater = true;
 
-      const res = await fetch(`http://localhost:6969/addWatch?movie=${this.movies[i].id}`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${this.store.user.token}`
+      const res = await fetch(
+        `http://localhost:6969/addWatch?movie=${this.movies[i].id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${this.store.user.token}`,
+          },
         }
-      }
-      )
+      );
 
-      console.log(res.status)
-    }
+      console.log(res.status);
+    },
   },
   computed: {
     filteredMovies() {
