@@ -67,7 +67,6 @@ export default {
       event.preventDefault();
       this.err = "";
       this.loading = true;
-      console.log(this.form);
       const data = await fetch("http://localhost:6969/register", {
         method: "POST",
         body: JSON.stringify(this.form),
