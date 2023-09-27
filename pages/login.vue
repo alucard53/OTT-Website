@@ -73,12 +73,13 @@ export default {
         },
       });
 
-      this.loading = false;
 
       if (res.status === 404) {
         this.err = "User not found";
+        this.loading = false;
       } else if (res.status === 400) {
         this.err = "Incorrect password";
+        this.loading = false;
       } else {
         const data = await res.json();
         this.store.setUser(data);
@@ -88,6 +89,8 @@ export default {
             Authorization: `Bearer ${this.store.user.token}`,
           },
         });
+
+        this.loading = false;
 
         if (data1.status === 200) {
           navigateTo("/dashb");

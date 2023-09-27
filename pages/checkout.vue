@@ -66,11 +66,6 @@ export default {
   async mounted() {
     if (this.store.user.stripeID !== "") {
       try {
-        console.log(
-          this.store.sub.plan,
-          this.store.sub.billing,
-          this.store.user.stripeID
-        );
         const res = await fetch("http://localhost:6969/pay", {
           method: "POST",
           body: JSON.stringify({
