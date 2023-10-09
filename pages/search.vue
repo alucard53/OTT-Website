@@ -17,6 +17,7 @@
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         v-if="movie.watchlater"
+        @click="watchlater"
       >
         Watch later
       </button>
@@ -28,12 +29,20 @@
         Add to Watch later
       </button>
       <br />
+      <!-- <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        v-if="movie.watchlater"
+      >
+        Remove watchlater
+      </button> -->
+      <br />
     </div>
   </div>
 </template>
 
 <script>
 import { userStore } from "~/stores/userStore";
+// import watchLater from "./watchLater.vue";
 
 export default {
   async mounted() {
@@ -89,6 +98,9 @@ export default {
       );
 
       console.log(res.status);
+    },
+    watchlater() {
+      this.$router.push("./watchLater");
     },
   },
   computed: {

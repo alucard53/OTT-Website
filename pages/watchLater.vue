@@ -1,7 +1,7 @@
 <template>
   <NavbarComponent />
   <div class="grid grid-cols-3 gap-4 m-5">
-    <div class="box" v-for="movie in movies" :key="movie.id">
+    <div class="box" v-for="(movie, index) in movies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
       <h3><b>Title: </b> {{ movie.title }}</h3>
@@ -16,6 +16,7 @@
       <br />
       <button
         class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        @click="removeWatch(index)"
       >
         remove from list
       </button>
@@ -46,12 +47,52 @@ export default {
       const watchlater = await data.json();
       this.movies = watchlater.wlMovies;
       console.log(this.movies);
+    } else {
+      this.movies = await data.json();
+
+      for (let i in this.movies) {
+        const res = await fetch(
+          `http://localhost:6969/getWatchLater?id=${this.movies[i].id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ email: this.store.user.email }),
+          }
+        );
+        console.log(res);
+
+        if (res.status === 200) {
+          this.movies[i].watchlater = true;
+        }
+      }
     }
   },
   data() {
     return {
       movies: [],
     };
+  },
+  methods: {
+    async removeWatch(i) {
+      this.movies[i].watchlater = true;
+
+      const res = await fetch(
+        `http://localhost:6969/removeWatchLater?id=${this.movies[i].id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${this.store.user.token}`,
+          },
+        }
+      );
+
+      console.log(res.status);
+      console.log(res);
+      this.movies.splice(this.movies.indexOf(this.movies[i]), 1);
+      console.log(this.movies);
+    },
   },
 };
 </script>
