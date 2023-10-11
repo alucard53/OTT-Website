@@ -14,18 +14,12 @@
       <br />
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        v-if="movie.watchlater"
-        @click="watchlater"
-      >
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchlater"
+        @click="watchlater">
         Watch later
       </button>
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        v-else
-        @click="addWatch(index)"
-      >
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
+        @click="addWatch(index)">
         Add to Watch later
       </button>
       <br />
@@ -45,7 +39,7 @@ import { userStore } from "~/stores/userStore";
 // import watchLater from "./watchLater.vue";
 
 export default {
-  async mounted() {
+  async created() {
     this.store = userStore();
     console.log(this.$route.query);
     const data = await fetch("http://localhost:6969/movies", {
@@ -59,23 +53,6 @@ export default {
       console.log("Error in fetching movies data from db");
     } else {
       this.movies = await data.json();
-
-      for (let i in this.movies) {
-        const res = await fetch(
-          `http://localhost:6969/checkWatch?movie=${this.movies[i].id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: this.store.user.email }),
-          }
-        );
-
-        if (res.status === 200) {
-          this.movies[i].watchlater = true;
-        }
-      }
     }
   },
   data() {

@@ -14,11 +14,8 @@
       <br />
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        @click="removeWatch(index)"
-      >
-        remove from list
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="removeWatch(index)">
+        remove from watch later
       </button>
       <br />
     </div>
@@ -32,7 +29,7 @@ export default {
   async mounted() {
     this.store = userStore();
     const data = await fetch("http://localhost:6969/getWatchLater", {
-      method: "Post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,8 +37,6 @@ export default {
     });
 
     console.log(data.status);
-
-    //aap movies ko update karo toh wo show hoga
 
     if (data.status === 200) {
       const watchlater = await data.json();
