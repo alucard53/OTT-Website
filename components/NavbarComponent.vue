@@ -157,8 +157,8 @@ button {
 }
 
 .navContainer .search svg {
-  width: 1lh;
-  height: 1lh;
+  width: 35px;
+  height: 35px;
   color: white;
   position: relative;
   align-items: center;

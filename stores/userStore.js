@@ -14,7 +14,7 @@ export const userStore = defineStore("userStore", {
       token: "",
       substate: "None",
       billing: 0,
-      startData: "",
+      startDate: "",
     };
 
     return {
@@ -48,7 +48,7 @@ export const userStore = defineStore("userStore", {
           token: "",
           substate: "None",
           billing: 0,
-          startData: "",
+          startDate: "",
         }
         return
       }
@@ -60,6 +60,7 @@ export const userStore = defineStore("userStore", {
       this.user.token = newUser.token;
       this.user.plan = newUser.plan;
       this.user.substate = newUser.substate;
+      this.user.startDate = newUser.startDate;
       this.user.billing = newUser.billing;
     },
   },

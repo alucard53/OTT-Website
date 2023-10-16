@@ -4,18 +4,23 @@
     <div class="flex flex-col bg-white rounded-md">
       <div class="flex flex-row">
         <div class="flex align-middle px-5 justify-start items-center">
-          <span class="mb-2 text-xl font-medium leading-tight">
+          <span class="text-xl font-medium leading-tight">
             Current plan details
           </span>
         </div>
         <div class="flex justify-start">
-          <button type="button"
-            class="inline-block rounded bg-primary mx-3 my-4 px-2 pb-1.5 pt-1.5 text-xs font-medium bg-blue-400">
+          <span class="inline-block rounded bg-primary mx-1 my-4 px-2.5 py-2 text-xs font-medium bg-blue-400 ">
             {{ substate }}
-          </button>
+          </span>
           <div class="flex w-3/6 ml-60 mr-5 justify-end items-center">
-            <span>Cancel</span>
+            <button class="border-solid border-2 border-red-700 rounded-md text-red-700 px-2 py-2 ml-5 hover:bg-gray-200"
+              @click="openCancel = true">
+              Cancel
+            </button>
           </div>
+          <Teleport to="body">
+            <CancelConfirm v-if="openCancel" :jwt="token" @close_popup="openCancel = false" />
+          </Teleport>
         </div>
       </div>
       <div class="flex flex-row">
@@ -29,9 +34,13 @@
       <div class="flex flex-row font-bold text-2xl ml-5 mb-4">
         ₹ {{ price }}
       </div>
-      <div class="flex flex-row ml-5 mb-2">
-        <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2">
-          Cancel Plan
+      <div class="ml-5 mb-1 text-sm">
+        Your plan is active till
+        <span class="text-blue-900">{{ startDate }}</span>
+      </div>
+      <div class="flex flex-row my-2">
+        <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2 ml-5 hover:bg-gray-100">
+          Change Plan
         </button>
       </div>
     </div>
@@ -41,19 +50,23 @@
 <script>
 import { userStore } from "~/stores/userStore";
 
+import CancelConfirm from "~/components/CancelConfirm.vue";
+
 export default {
   async mounted() {
-    this.store = userStore();
-    this.substate = this.store.user.substate;
-    this.plan = this.store.plans[this.store.user.plan];
-    this.billing = this.store.billing[this.store.user.billing];
+    const store = userStore();
+    this.substate = store.user.substate;
+    this.plan = store.plans[store.user.plan];
+    this.billing = store.billing[store.user.billing];
     this.price =
-      this.store.prices[this.store.user.billing][this.store.user.plan].toString() +
+      store.prices[store.user.billing][store.user.plan].toString() +
       (this.billing === "Monthly" ? "/mo" : "/yr");
     this.devices = "";
-    this.store.devices[this.store.user.plan].forEach((element) => {
+    store.devices[store.user.plan].forEach((element) => {
       this.devices += element + "+";
     });
+    this.startDate = store.user.startDate.substring(0, 10);
+    this.token = store.user.token
   },
   data() {
     return {
@@ -62,8 +75,17 @@ export default {
       billing: "",
       devices: "",
       price: 0,
+      startDate: "",
+      openCancel: false,
+      blurPage: "",
+      token: {},
     };
   },
+  methods: {
+    openPopup() {
+      setTimeout(() => this.openCancel = true, 100)
+    }
+  }
 };
 </script>
 
@@ -80,6 +102,10 @@ export default {
   background-color: white;
   border-radius: 12px;
   margin: 0% 36%;
+}
+
+.blurPage {
+  filter: blur(5px);
 }
 
 .hcontainer {
