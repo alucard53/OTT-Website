@@ -69,7 +69,7 @@ export default {
       this.devices += element + "+";
     });
     if (!store.user.startDate) {
-      this.startDate = Date.now().toString()
+      this.startDate = Date.now()
     } else {
       this.startDate = store.user.startDate.substring(0, 10);
     }
