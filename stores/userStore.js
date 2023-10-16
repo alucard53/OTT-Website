@@ -56,12 +56,30 @@ export const userStore = defineStore("userStore", {
       if (this.user.name === '') {
         this.user.name = newUser.name;
       }
-      this.user.email = newUser.email;
-      this.user.token = newUser.token;
-      this.user.plan = newUser.plan;
-      this.user.substate = newUser.substate;
-      this.user.startDate = newUser.startDate;
-      this.user.billing = newUser.billing;
+
+      if (newUser.email) {
+        this.user.email = newUser.email;
+      }
+
+      if (newUser.token) {
+        this.user.token = newUser.token;
+      }
+
+      if (newUser.plan) {
+        this.user.plan = newUser.plan;
+      }
+
+      if (newUser.substate && newUser.substate !== "") {
+        this.user.substate = newUser.substate;
+      }
+
+      if (newUser.startDate) {
+        this.user.startDate = newUser.startDate;
+      }
+
+      if (newUser.billing) {
+        this.user.billing = newUser.billing;
+      }
     },
   },
   persist: {

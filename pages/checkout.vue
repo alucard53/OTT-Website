@@ -144,11 +144,13 @@ export default {
             "Content-Type": "application/json",
           },
         });
+        const d = new Date()
         this.store.setUser({
           email: this.store.user.email,
           plan: this.store.sub.plan,
           substate: "Active",
           billing: this.store.sub.billing,
+          startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`
         });
         navigateTo("/dashb");
       }

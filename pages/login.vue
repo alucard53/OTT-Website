@@ -84,9 +84,15 @@ export default {
         const data = await res.json();
         this.store.setUser(data);
 
+        console.log(data)
+
+        console.log(this.store.user)
+
+        console.log("token after login", data.token)
+
         const data1 = await fetch("http://localhost:6969/checkSub", {
           headers: {
-            Authorization: `Bearer ${this.store.user.token}`,
+            Authorization: `Bearer ${data.token}`,
           },
         });
 

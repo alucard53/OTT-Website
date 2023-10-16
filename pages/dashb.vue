@@ -13,14 +13,17 @@
             {{ substate }}
           </span>
           <div class="flex w-3/6 ml-60 mr-5 justify-end items-center">
-            <button class="border-solid border-2 border-red-700 rounded-md text-red-700 px-2 py-2 ml-5 hover:bg-gray-200"
+            <button v-if="substate === 'Active'"
+              class="border-solid border-2 border-red-700 rounded-md text-red-700 px-2 py-2 ml-5 hover:bg-gray-200"
               @click="openCancel = true">
               Cancel
             </button>
           </div>
-          <Teleport to="body">
-            <CancelConfirm v-if="openCancel" :jwt="token" @close_popup="openCancel = false" />
-          </Teleport>
+          <ClientOnly>
+            <Teleport to=".page">
+              <CancelConfirm v-if="openCancel" :jwt="token" @close_popup="openCancel = false" />
+            </Teleport>
+          </ClientOnly>
         </div>
       </div>
       <div class="flex flex-row">
@@ -39,8 +42,8 @@
         <span class="text-blue-900">{{ startDate }}</span>
       </div>
       <div class="flex flex-row my-2">
-        <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2 ml-5 hover:bg-gray-100">
-          Change Plan
+        <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2 ml-5 hover:bg-gray-200">
+          {{ substate === "Active" ? "Change" : "Renew" }} Plan
         </button>
       </div>
     </div>
@@ -65,7 +68,11 @@ export default {
     store.devices[store.user.plan].forEach((element) => {
       this.devices += element + "+";
     });
-    this.startDate = store.user.startDate.substring(0, 10);
+    if (!store.user.startDate) {
+      this.startDate = Date.now().toString()
+    } else {
+      this.startDate = store.user.startDate.substring(0, 10);
+    }
     this.token = store.user.token
   },
   data() {
@@ -82,9 +89,6 @@ export default {
     };
   },
   methods: {
-    openPopup() {
-      setTimeout(() => this.openCancel = true, 100)
-    }
   }
 };
 </script>

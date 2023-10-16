@@ -79,7 +79,7 @@ export default {
       if (data.status === 200) {
         navigateTo("/login");
       } else if (data.status === 400) {
-        this.err = "Invalid credentials"
+        this.err = "Email already exists"
       } else {
         this.err = "Server error, try again later"
       }

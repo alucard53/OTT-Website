@@ -1,8 +1,8 @@
 <template>
-    <div id="popup" class="flex w-full items-center justify-center  min-h-screen fixed backdrop-blur-sm">
-        <div class="flex flex-col items-center h-52 w-1/3 p-6 bg-white rounded-md">
+    <div id="popup" class="flex w-full items-center justify-center  min-h-screen fixed backdrop-blur-md z-50">
+        <div class="flex flex-col items-center h-52 w-1/3 p-6 bg-white rounded-md z-50 shadoo">
             <span class="h-fit text-lg font-bold mb-2">Are you sure you want to cancel your subscription?</span>
-            <span class="">
+            <span class="text-center">
                 This is irreversible and no refunds will be provided. You will lose your subscription
                 privileges immediately.
             </span>
@@ -43,6 +43,7 @@ export default {
 
     methods: {
         async cancelSub() {
+            console.log("cancelling")
             try {
                 const res = await fetch("http://localhost:6969/cancelSub", {
                     headers: {
@@ -50,6 +51,13 @@ export default {
                     },
                     method: "GET",
                 })
+
+                if (res.status === 200) {
+                    this.store.user.substate = "Inactive"
+                    this.store.setUser(this.store.user)
+                }
+
+                window.location.reload()
             } catch (e) {
                 console.log(e)
             }
@@ -58,4 +66,9 @@ export default {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+.shadoo {
+    box-shadow: 13px 7px 58px -10px rgba(0, 0, 0, 0.75);
+
+}
+</style>
