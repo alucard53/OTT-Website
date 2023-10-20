@@ -57,7 +57,6 @@ export default {
     this.store = userStore();
     this.plan = this.store.plans[this.store.sub.plan];
     this.billing = this.store.billing[this.store.sub.billing];
-    console.log("Billing", this.billing)
     this.price =
       this.store.prices[this.store.sub.billing][this.store.sub.plan].toString() +
       (this.billing === "Monthly" ? "/mo" : "/yr");

@@ -28,7 +28,7 @@ import { userStore } from "~/stores/userStore";
 export default {
   async mounted() {
     this.store = userStore();
-    const data = await fetch("http://localhost:6969/getWatchLater", {
+    const data = await fetch("http://localhost:6969/getWatch", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -39,29 +39,11 @@ export default {
     console.log(data.status);
 
     if (data.status === 200) {
-      const watchlater = await data.json();
-      this.movies = watchlater.wlMovies;
+      const watchLater = await data.json();
+      this.movies = watchLater.wlMovies;
       console.log(this.movies);
     } else {
       this.movies = await data.json();
-
-      for (let i in this.movies) {
-        const res = await fetch(
-          `http://localhost:6969/getWatchLater?id=${this.movies[i].id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: this.store.user.email }),
-          }
-        );
-        console.log(res);
-
-        if (res.status === 200) {
-          this.movies[i].watchlater = true;
-        }
-      }
     }
   },
   data() {
@@ -74,7 +56,7 @@ export default {
       this.movies[i].watchlater = true;
 
       const res = await fetch(
-        `http://localhost:6969/removeWatchLater?id=${this.movies[i].id}`,
+        `http://localhost:6969/removeWatch?id=${this.movies[i].id}`,
         {
           method: "DELETE",
           headers: {

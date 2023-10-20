@@ -14,21 +14,16 @@
       <br />
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchlater"
-        @click="watchlater">
-        Watch later
+
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchLater">
+        <NuxtLink to="/watchLater">Watch later</NuxtLink>
       </button>
+
       <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
         @click="addWatch(index)">
         Add to Watch later
       </button>
-      <br />
-      <!-- <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        v-if="movie.watchlater"
-      >
-        Remove watchlater
-      </button> -->
+
       <br />
     </div>
   </div>
@@ -36,18 +31,21 @@
 
 <script>
 import { userStore } from "~/stores/userStore";
-// import watchLater from "./watchLater.vue";
 
 export default {
   async created() {
     this.store = userStore();
-    console.log(this.$route.query);
+    console.log(this.store.user.email);
     const data = await fetch("http://localhost:6969/movies", {
-      method: "Get",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        email: this.store.user.email
+      })
     });
+
 
     if (data.status != 200) {
       console.log("Error in fetching movies data from db");
@@ -62,7 +60,7 @@ export default {
   },
   methods: {
     async addWatch(i) {
-      this.movies[i].watchlater = true;
+      this.movies[i].watchLater = true;
 
       const res = await fetch(
         `http://localhost:6969/addWatch?movie=${this.movies[i].id}`,
@@ -74,10 +72,8 @@ export default {
         }
       );
 
+
       console.log(res.status);
-    },
-    watchlater() {
-      this.$router.push("./watchLater");
     },
   },
   computed: {
