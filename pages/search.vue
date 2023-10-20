@@ -1,5 +1,6 @@
 <template>
   <NavbarComponent />
+  <FilterBar />
   <div class="grid grid-cols-3 gap-4 m-5">
     <div class="box" v-for="(movie, index) in filteredMovies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
@@ -15,12 +16,18 @@
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchLater">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        v-if="movie.watchLater"
+      >
         <NuxtLink to="/watchLater">Watch later</NuxtLink>
       </button>
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
-        @click="addWatch(index)">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        v-else
+        @click="addWatch(index)"
+      >
         Add to Watch later
       </button>
 
@@ -42,10 +49,9 @@ export default {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email: this.store.user.email
-      })
+        email: this.store.user.email,
+      }),
     });
-
 
     if (data.status != 200) {
       console.log("Error in fetching movies data from db");
@@ -72,15 +78,20 @@ export default {
         }
       );
 
-
       console.log(res.status);
     },
   },
   computed: {
     filteredMovies() {
-      return this.movies.filter((movie) =>
-        movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
-      );
+      if (this.$route.query.g === undefined) {
+        return this.movies.filter((movie) =>
+          movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
+        );
+      } else {
+        return this.movies.filter((movie) =>
+          movie.genre.toLowerCase().includes(this.$route.query.g.toLowerCase())
+        );
+      }
     },
   },
 };
