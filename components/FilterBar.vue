@@ -27,10 +27,12 @@
       <button>sort by fit</button>
 
       <div class="dropItems">
-        <button class="dropButton">latest</button>
-        <button class="dropButton">earliest</button>
-        <button class="dropButton">a-z</button>
-        <button class="dropButton">z-a</button>
+        <button @click="handleSort('latest')" class="dropButton">latest</button>
+        <button @click="handleSort('earliest')" class="dropButton">
+          earliest
+        </button>
+        <button @click="handleSort('a-z')" class="dropButton">a-z</button>
+        <button @click="handleSort('z-a')" class="dropButton">z-a</button>
       </div>
     </div>
   </div>
@@ -44,14 +46,18 @@ export default {
 
   data() {
     return {
-      query: "",
       genre: "",
+      sort: "",
     };
   },
   methods: {
     handleSubmit(genreName) {
       this.genre = genreName;
-      navigateTo(`/search?q=${this.query}&g=${this.genre}`);
+      navigateTo(`/search?g=${this.genre}`);
+    },
+    handleSort(sortBy) {
+      this.sort = sortBy;
+      navigateTo(`/search?sort=${this.sort}`);
     },
   },
 };

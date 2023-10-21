@@ -83,13 +83,54 @@ export default {
   },
   computed: {
     filteredMovies() {
-      if (this.$route.query.g === undefined) {
-        return this.movies.filter((movie) =>
-          movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
-        );
-      } else {
+      // console.log(this.$route.query.sort);
+      // console.log(this.movies.length);
+
+      if (this.$route.query.g !== undefined) {
         return this.movies.filter((movie) =>
           movie.genre.toLowerCase().includes(this.$route.query.g.toLowerCase())
+        );
+      } else if (this.$route.query.sort !== undefined) {
+        if (this.$route.query.sort === "a-z") {
+          return this.movies.sort((a, b) => {
+            let fa = a.title.toLowerCase(),
+              fb = b.title.toLowerCase();
+            if (fa < fb) {
+              return -1;
+            }
+            if (fa > fb) {
+              return 1;
+            }
+            return 0;
+          });
+        } else if (this.$route.query.sort === "z-a") {
+          return this.movies.sort((a, b) => {
+            let fa = a.title.toLowerCase(),
+              fb = b.title.toLowerCase();
+            if (fa > fb) {
+              return -1;
+            }
+            if (fa < fb) {
+              return 1;
+            }
+            return 0;
+          });
+        } else if (this.$route.query.sort === "earliest") {
+          return this.movies.sort((a, b) => {
+            let fa = a.year,
+              fb = b.year;
+            return fa - fb;
+          });
+        } else if (this.$route.query.sort === "latest") {
+          return this.movies.sort((a, b) => {
+            let fa = a.year,
+              fb = b.year;
+            return fb - fa;
+          });
+        }
+      } else {
+        return this.movies.filter((movie) =>
+          movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
         );
       }
     },
