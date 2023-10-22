@@ -16,18 +16,12 @@
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
 
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        v-if="movie.watchLater"
-      >
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchLater">
         <NuxtLink to="/watchLater">Watch later</NuxtLink>
       </button>
 
-      <button
-        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        v-else
-        @click="addWatch(index)"
-      >
+      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
+        @click="addWatch(index)">
         Add to Watch later
       </button>
 
@@ -40,7 +34,7 @@
 import { userStore } from "~/stores/userStore";
 
 export default {
-  async created() {
+  async mounted() {
     this.store = userStore();
     console.log(this.store.user.email);
     const data = await fetch("http://localhost:6969/movies", {
@@ -83,56 +77,60 @@ export default {
   },
   computed: {
     filteredMovies() {
-      // console.log(this.$route.query.sort);
-      // console.log(this.movies.length);
-
-      if (this.$route.query.g !== undefined) {
+      if (this.$route.query.g) {
         return this.movies.filter((movie) =>
           movie.genre.toLowerCase().includes(this.$route.query.g.toLowerCase())
         );
-      } else if (this.$route.query.sort !== undefined) {
-        if (this.$route.query.sort === "a-z") {
-          return this.movies.sort((a, b) => {
-            let fa = a.title.toLowerCase(),
-              fb = b.title.toLowerCase();
-            if (fa < fb) {
-              return -1;
-            }
-            if (fa > fb) {
-              return 1;
-            }
-            return 0;
-          });
-        } else if (this.$route.query.sort === "z-a") {
-          return this.movies.sort((a, b) => {
-            let fa = a.title.toLowerCase(),
-              fb = b.title.toLowerCase();
-            if (fa > fb) {
-              return -1;
-            }
-            if (fa < fb) {
-              return 1;
-            }
-            return 0;
-          });
-        } else if (this.$route.query.sort === "earliest") {
-          return this.movies.sort((a, b) => {
-            let fa = a.year,
-              fb = b.year;
-            return fa - fb;
-          });
-        } else if (this.$route.query.sort === "latest") {
-          return this.movies.sort((a, b) => {
-            let fa = a.year,
-              fb = b.year;
-            return fb - fa;
-          });
+      } else if (this.$route.query.s) {
+        switch (this.$route.query.s) {
+          case "a-z":
+            this.movies.sort((a, b) => {
+              let fa = a.title.toLowerCase(),
+                fb = b.title.toLowerCase();
+              if (fa < fb) {
+                return -1;
+              }
+              if (fa > fb) {
+                return 1;
+              }
+              return 0;
+            });
+            break;
+          case "z-a":
+            this.movies.sort((a, b) => {
+              let fa = a.title.toLowerCase(),
+                fb = b.title.toLowerCase();
+              if (fa > fb) {
+                return -1;
+              }
+              if (fa < fb) {
+                return 1;
+              }
+              return 0;
+            });
+            break;
+          case "earliest":
+            this.movies.sort((a, b) => {
+              let fa = a.year,
+                fb = b.year;
+              return fa - fb;
+            });
+            break;
+          case "latest":
+            this.movies.sort((a, b) => {
+              let fa = a.year,
+                fb = b.year;
+              return fb - fa;
+            });
+            break;
         }
-      } else {
-        return this.movies.filter((movie) =>
-          movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
-        );
       }
+      for (let movie of this.movies) {
+        console.log(movie.title)
+      }
+      return this.movies.filter((movie) =>
+        movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
+      );
     },
   },
 };
