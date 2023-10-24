@@ -14,7 +14,10 @@
       <br />
       <h4><b>Director: </b>{{ movie.director }}</h4>
       <br />
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="removeWatch(index)">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        @click="removeWatch(index)"
+      >
         remove from watch later
       </button>
       <br />
@@ -28,22 +31,26 @@ import { userStore } from "~/stores/userStore";
 export default {
   async mounted() {
     this.store = userStore();
-    const data = await fetch("http://localhost:6969/getWatch", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email: this.store.user.email }),
-    });
+    try {
+      const data = await fetch("http://localhost:6969/getWatch", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email: this.store.user.email }),
+      });
 
-    console.log(data.status);
+      console.log(data.status);
 
-    if (data.status === 200) {
-      const watchLater = await data.json();
-      this.movies = watchLater.wlMovies;
-      console.log(this.movies);
-    } else {
-      this.movies = await data.json();
+      if (data.status === 200) {
+        const watchLater = await data.json();
+        this.movies = watchLater.wlMovies;
+        console.log(this.movies);
+      } else {
+        this.movies = await data.json();
+      }
+    } catch (e) {
+      console.log(e);
     }
   },
   data() {

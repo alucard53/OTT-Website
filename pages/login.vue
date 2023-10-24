@@ -23,7 +23,12 @@
           </label>
         </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+        <img
+          v-if="loading"
+          src="../public/loading.gif"
+          width="50"
+          height="50"
+        />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
@@ -65,39 +70,41 @@ export default {
       this.err = "";
       this.loading = true;
 
-      const res = await fetch("http://localhost:6969/login", {
-        method: "Post",
-        body: JSON.stringify(this.form),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
-
-
-      if (res.status === 404) {
-        this.err = "User not found";
-        this.loading = false;
-      } else if (res.status === 400) {
-        this.err = "Incorrect password";
-        this.loading = false;
-      } else {
-        const data = await res.json();
-        this.store.setUser(data);
-
-        const data1 = await fetch("http://localhost:6969/checkSub", {
+      try {
+        const res = await fetch("http://localhost:6969/login", {
+          method: "Post",
+          body: JSON.stringify(this.form),
           headers: {
-            Authorization: `Bearer ${data.token}`,
+            "Content-Type": "application/json",
           },
         });
 
-        this.loading = false;
-
-        if (data1.status === 200) {
-          navigateTo("/dashb");
+        if (res.status === 404) {
+          this.err = "User not found";
+          this.loading = false;
+        } else if (res.status === 400) {
+          this.err = "Incorrect password";
+          this.loading = false;
         } else {
-          navigateTo("/plan");
-        }
+          const data = await res.json();
+          this.store.setUser(data);
 
+          const data1 = await fetch("http://localhost:6969/checkSub", {
+            headers: {
+              Authorization: `Bearer ${data.token}`,
+            },
+          });
+
+          this.loading = false;
+
+          if (data1.status === 200) {
+            navigateTo("/dashb");
+          } else {
+            navigateTo("/plan");
+          }
+        }
+      } catch (e) {
+        console.log(e);
       }
     },
   },
