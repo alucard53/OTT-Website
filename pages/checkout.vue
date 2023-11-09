@@ -86,9 +86,15 @@ export default {
         console.log(e);
       }
 
-      stripe = await loadStripe(
-        "pk_test_51NdU4USA6MDXluwIhzPIPNObKmZBacf8YpRajuzGnmzrV86wsj4Rt2LefbVKqQrb8W3dwmGoAj4TYcz0I6xxLmkW00YHEtJlFA"
-      );
+      try {
+        stripe = await loadStripe(
+          "pk_test_51NdU4USA6MDXluwIhzPIPNObKmZBacf8YpRajuzGnmzrV86wsj4Rt2LefbVKqQrb8W3dwmGoAj4TYcz0I6xxLmkW00YHEtJlFA"
+        );
+      } catch (e) {
+        console.log("Failed to fetch stripe");
+        console.log(e);
+        return;
+      }
 
       elements = stripe.elements({
         appearance: {},

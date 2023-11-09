@@ -21,12 +21,7 @@
           <span class="inputGroup">
             <label for="password" class="label"> Password </label>
 
-            <input
-              type="password"
-              class="input"
-              v-model="form.password"
-              required
-            />
+            <input type="password" class="input" v-model="form.password" required />
 
             <label for="remember_me">
               <input type="checkbox" />
@@ -34,12 +29,7 @@
             </label>
           </span>
 
-          <img
-            v-if="loading"
-            src="../public/loading.gif"
-            width="50"
-            height="50"
-          />
+          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
           <div v-if="err.length > 0" style="color: red">
             {{ err }}
@@ -95,6 +85,7 @@ export default {
           this.err = "Server error, try again later";
         }
       } catch (e) {
+        this.err = "Network error, try again later";
         console.log(e);
       }
     },

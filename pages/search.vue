@@ -37,20 +37,24 @@ export default {
   async mounted() {
     this.store = userStore();
     console.log(this.store.user.email);
-    const data = await fetch("http://localhost:6969/movies", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: this.store.user.email,
-      }),
-    });
+    try {
+      const data = await fetch("http://localhost:6969/movies", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          email: this.store.user.email,
+        }),
+      });
 
-    if (data.status != 200) {
-      console.log("Error in fetching movies data from db");
-    } else {
-      this.movies = await data.json();
+      if (data.status != 200) {
+        console.log("Error in fetching movies data from db");
+      } else {
+        this.movies = await data.json();
+      }
+    } catch (e) {
+      console.log(e)
     }
   },
   data() {
