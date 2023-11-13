@@ -223,6 +223,11 @@ button {
   border-radius: 4px;
 }
 
+button:hover {
+  background-color: #133669;
+  transition: all 0.3s ease 0s;
+}
+
 .right {
   width: 40%;
   border-radius: 0 8px 8px 0;

@@ -23,18 +23,13 @@
           </label>
         </span>
 
-        <img
-          v-if="loading"
-          src="../public/loading.gif"
-          width="50"
-          height="50"
-        />
+        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
         </div>
 
-        <input type="submit" value="Log in" class="Submit" />
+        <button type="submit" class="Submit">Log In</button>
 
         <p style="font-weight: 500">
           New to My-App?
@@ -97,10 +92,17 @@ export default {
 
           this.loading = false;
 
-          if (data1.status === 200) {
-            navigateTo("/dashb");
-          } else {
-            navigateTo("/plan");
+          console.log(data1.status)
+
+          switch (data1.status) {
+            case 200:
+              navigateTo("/dashb");
+              break;
+            case 406:
+              navigateTo("/checkout")
+              break;
+            default:
+              navigateTo("/plan");
           }
         }
       } catch (e) {
@@ -173,5 +175,10 @@ export default {
   margin: 5%;
   font-size: larger;
   color: white;
+}
+
+.Submit:hover {
+  background-color: #133669;
+  transition: all 0.3s ease 0s;
 }
 </style>

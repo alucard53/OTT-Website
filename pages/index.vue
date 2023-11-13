@@ -35,7 +35,7 @@
             {{ err }}
           </div>
 
-          <input type="submit" value="Sign up" class="Submit" />
+          <button type="submit" class="Submit">Log In</button>
 
           <p style="font-weight: 500">
             Already have an account?
@@ -155,5 +155,10 @@ export default {
   margin: 5%;
   font-size: larger;
   color: white;
+}
+
+.Submit:hover {
+  background-color: #133669;
+  transition: all 0.3s ease 0s;
 }
 </style>
