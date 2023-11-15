@@ -67,7 +67,7 @@ export default {
 
       try {
         const res = await fetch("http://localhost:6969/login", {
-          method: "Post",
+          method: "POST",
           body: JSON.stringify(this.form),
           headers: {
             "Content-Type": "application/json",
@@ -82,6 +82,7 @@ export default {
           this.loading = false;
         } else {
           const data = await res.json();
+          console.log(data);
           this.store.setUser(data);
 
           const data1 = await fetch("http://localhost:6969/checkSub", {
@@ -98,7 +99,7 @@ export default {
             case 200:
               navigateTo("/dashb");
               break;
-            case 406:
+            case 206:
               navigateTo("/checkout")
               break;
             default:

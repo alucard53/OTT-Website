@@ -67,6 +67,7 @@ export const userStore = defineStore("userStore", {
 
       if (newUser.plan) {
         this.user.plan = newUser.plan;
+        this.sub.plan = newUser.plan;
       }
 
       if (newUser.substate && newUser.substate !== "") {
@@ -79,6 +80,7 @@ export const userStore = defineStore("userStore", {
 
       if (newUser.billing) {
         this.user.billing = newUser.billing;
+        this.sub.billing = newUser.billing;
       }
     },
   },

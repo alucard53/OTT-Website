@@ -1,7 +1,7 @@
 <template>
   <NavbarComponent />
   <div class="page">
-    <form class="container">
+    <form class="container" v-if="!loading">
       <div class="left">
         <span class="headingl">Complete Payment</span>
         <span class="instruc">Enter your credit or debit card details below</span>
@@ -31,6 +31,7 @@
         </div>
       </div>
     </form>
+    <img v-else src="../public/loading.gif" width="400" height="400">
   </div>
 </template>
 
@@ -48,6 +49,7 @@ export default {
     return {
       store: {},
       plan: "",
+      loading: true,
       billing: "",
       price: 0,
     };
@@ -60,9 +62,6 @@ export default {
     this.price =
       this.store.prices[this.store.sub.billing][this.store.sub.plan].toString() +
       (this.billing === "Monthly" ? "/mo" : "/yr");
-  },
-
-  async mounted() {
     if (this.store.user.stripeID !== "") {
       try {
         const res = await fetch("http://localhost:6969/pay", {
@@ -76,13 +75,24 @@ export default {
             "Content-Type": "application/json",
           },
         });
+        this.loading = false;
         if (res.status === 500) {
           console.log("Error in creating subscription");
-        } else {
+        } else if (res.status === 206) {
           const data = await res.json();
           clientSecret = data.secret;
+        } else {
+          const d = new Date();
+          this.store.setUser({
+            plan: this.store.sub.plan,
+            substate: "Active",
+            billing: this.store.sub.billing,
+            startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`
+          });
+          navigateTo("/dashb");
         }
       } catch (e) {
+        this.loading = false;
         console.log(e);
       }
 
@@ -151,7 +161,6 @@ export default {
         });
         const d = new Date()
         this.store.setUser({
-          email: this.store.user.email,
           plan: this.store.sub.plan,
           substate: "Active",
           billing: this.store.sub.billing,
