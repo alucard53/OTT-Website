@@ -2,7 +2,7 @@
   <div class="page">
     <div class="container">
       <form class="form" @submit="handleSubmit">
-        <h2 class="heading">Log in to your account</h2>
+        <h2 class="heading">Sign in</h2>
 
         <span class="inputGroup">
           <label for="email" class="label"> Email </label>
@@ -17,23 +17,28 @@
 
           <input type="password" class="input" v-model="form.password" />
 
-          <label for="remember_me">
+          <label for="remember_me" style="color: #fff">
             <input type="checkbox" />
             Remember me
           </label>
         </span>
 
-        <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+        <img
+          v-if="loading"
+          src="../public/loading.gif"
+          width="50"
+          height="50"
+        />
 
         <div v-if="err.length > 0" style="color: red">
           {{ err }}
         </div>
 
-        <button type="submit" class="Submit">Log In</button>
+        <button type="submit" class="Submit">Sign In</button>
 
-        <p style="font-weight: 500">
+        <p style="font-weight: 500; color: #fff">
           New to My-App?
-          <NuxtLink to="/" style="color: #1f4c90">Sign In</NuxtLink>
+          <NuxtLink to="/" style="color: #8597ab">Sign Up</NuxtLink>
         </p>
       </form>
     </div>
@@ -93,14 +98,14 @@ export default {
 
           this.loading = false;
 
-          console.log(data1.status)
+          console.log(data1.status);
 
           switch (data1.status) {
             case 200:
               navigateTo("/dashb");
               break;
             case 206:
-              navigateTo("/checkout")
+              navigateTo("/checkout");
               break;
             default:
               navigateTo("/plan");
@@ -116,7 +121,7 @@ export default {
 
 <style scoped>
 .page {
-  background-color: #1f4c90;
+  background-color: #091636;
   display: flex;
   justify-content: center;
 }
@@ -129,16 +134,19 @@ export default {
 }
 
 .heading {
-  font-size: x-large;
+  font-size: xx-large;
   font-weight: 600;
   margin: 5% 0 8%;
+  color: white;
+  text-shadow: 2px 2px rgba(255, 255, 255, 0.34);
 }
 
 .form {
   width: 33rem;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #21376081;
+  box-shadow: 4px 4px rgba(15, 15, 15, 0.268);
   padding: 2% 4% 1%;
   border-radius: 5%;
   justify-content: center;
@@ -155,6 +163,8 @@ export default {
 .label {
   font-weight: 500;
   font-size: medium;
+  color: white;
+  text-shadow: 1px 1px rgba(255, 255, 255, 0.438);
 }
 
 .input {
@@ -162,14 +172,18 @@ export default {
   padding: 1rem 1rem;
   margin: 8px 0px;
   display: inline-block;
-  border: 1px solid #ccc;
+  background-color: #4f708fa5;
+  box-shadow: 4px 4px rgba(15, 15, 15, 0.268);
+  color: #fff;
+  outline: none;
   border-radius: 8px;
   box-sizing: border-box;
-  font-size: medium;
+  font-size: large;
 }
 
 .Submit {
-  background-color: #1f4c90;
+  background-color: #091636;
+  box-shadow: 4px 4px #f5f5f516;
   width: 100%;
   padding: 1rem;
   border-radius: 8px;
@@ -179,7 +193,8 @@ export default {
 }
 
 .Submit:hover {
-  background-color: #133669;
+  box-shadow: 4px 4px #f5f5f585;
+  background-color: #213760;
   transition: all 0.3s ease 0s;
 }
 </style>

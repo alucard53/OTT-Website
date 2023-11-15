@@ -1,10 +1,10 @@
 <template>
   <div>
-    <NavbarComponent />
+    <!-- <NavbarComponent /> -->
     <div class="page">
       <div class="container">
         <form class="form" @submit="handleSubmit">
-          <h2 class="heading">Create Account</h2>
+          <h2 class="heading">Sign Up</h2>
 
           <span class="inputGroup">
             <label for="name" class="label"> Name </label>
@@ -21,25 +21,35 @@
           <span class="inputGroup">
             <label for="password" class="label"> Password </label>
 
-            <input type="password" class="input" v-model="form.password" required />
+            <input
+              type="password"
+              class="input"
+              v-model="form.password"
+              required
+            />
 
-            <label for="remember_me">
+            <label for="remember_me" style="color: #fff">
               <input type="checkbox" />
               Remember me
             </label>
           </span>
 
-          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
+          <img
+            v-if="loading"
+            src="../public/loading.gif"
+            width="50"
+            height="50"
+          />
 
           <div v-if="err.length > 0" style="color: red">
             {{ err }}
           </div>
 
-          <button type="submit" class="Submit">Log In</button>
+          <button type="submit" class="Submit">Sign Up</button>
 
-          <p style="font-weight: 500">
+          <p style="font-weight: 500; color: #fff">
             Already have an account?
-            <NuxtLink to="/login" style="color: #1f4c90">Log In</NuxtLink>
+            <NuxtLink to="/login" style="color: #8798ab">Sign In</NuxtLink>
           </p>
         </form>
       </div>
@@ -95,7 +105,7 @@ export default {
 
 <style scoped>
 .page {
-  background-color: #1f4c90;
+  background-color: #091636;
   display: flex;
   justify-content: center;
 }
@@ -108,18 +118,21 @@ export default {
 }
 
 .heading {
-  font-size: x-large;
+  font-size: xx-large;
   font-weight: 600;
   margin: 5% 0 8%;
+  color: white;
+  text-shadow: 2px 2px rgba(255, 255, 255, 0.34);
 }
 
 .form {
   width: 33rem;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: #21376081;
+  box-shadow: 4px 4px rgba(15, 15, 15, 0.268);
   padding: 2% 4% 1%;
-  border-radius: 5%;
+  border-radius: 3%;
   justify-content: center;
   align-items: center;
 }
@@ -134,6 +147,8 @@ export default {
 .label {
   font-weight: 500;
   font-size: medium;
+  color: white;
+  text-shadow: 1px 1px rgba(255, 255, 255, 0.438);
 }
 
 .input {
@@ -141,14 +156,18 @@ export default {
   padding: 1rem 1rem;
   margin: 8px 0px;
   display: inline-block;
-  border: 1px solid #ccc;
+  background-color: #4f708fa5;
+  box-shadow: 4px 4px rgba(15, 15, 15, 0.268);
   border-radius: 8px;
+  color: #fff;
+  outline: none;
   box-sizing: border-box;
-  font-size: medium;
+  font-size: large;
 }
 
 .Submit {
-  background-color: #1f4c90;
+  background-color: #091636;
+  box-shadow: 4px 4px #f5f5f516;
   width: 100%;
   padding: 1rem;
   border-radius: 8px;
@@ -158,7 +177,8 @@ export default {
 }
 
 .Submit:hover {
-  background-color: #133669;
+  box-shadow: 4px 4px #f5f5f585;
+  background-color: #213760;
   transition: all 0.3s ease 0s;
 }
 </style>

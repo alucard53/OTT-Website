@@ -1,10 +1,12 @@
 <template>
-  <NavbarComponent />
+  <!-- <NavbarComponent /> -->
   <div class="page">
     <form class="container" v-if="!loading">
       <div class="left">
         <span class="headingl">Complete Payment</span>
-        <span class="instruc">Enter your credit or debit card details below</span>
+        <span class="instruc"
+          >Enter your credit or debit card details below</span
+        >
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -31,7 +33,7 @@
         </div>
       </div>
     </form>
-    <img v-else src="../public/loading.gif" width="400" height="400">
+    <img v-else src="../public/loading.gif" width="400" height="400" />
   </div>
 </template>
 
@@ -60,8 +62,9 @@ export default {
     this.plan = this.store.plans[this.store.sub.plan];
     this.billing = this.store.billing[this.store.sub.billing];
     this.price =
-      this.store.prices[this.store.sub.billing][this.store.sub.plan].toString() +
-      (this.billing === "Monthly" ? "/mo" : "/yr");
+      this.store.prices[this.store.sub.billing][
+        this.store.sub.plan
+      ].toString() + (this.billing === "Monthly" ? "/mo" : "/yr");
     if (this.store.user.stripeID !== "") {
       try {
         const res = await fetch("http://localhost:6969/pay", {
@@ -87,7 +90,7 @@ export default {
             plan: this.store.sub.plan,
             substate: "Active",
             billing: this.store.sub.billing,
-            startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`
+            startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`,
           });
           navigateTo("/dashb");
         }
@@ -159,12 +162,12 @@ export default {
             "Content-Type": "application/json",
           },
         });
-        const d = new Date()
+        const d = new Date();
         this.store.setUser({
           plan: this.store.sub.plan,
           substate: "Active",
           billing: this.store.sub.billing,
-          startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`
+          startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`,
         });
         navigateTo("/dashb");
       }
