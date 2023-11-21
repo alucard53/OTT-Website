@@ -16,9 +16,18 @@
     </div>
 
     <div class="search">
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="1.5"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
+        />
       </svg>
 
       <form @submit="handleSubmit">
@@ -32,13 +41,24 @@
         <li><button @click="() => navigateTo('/login')">Log In</button></li>
       </ul>
     </nav>
-    <div v-else class="mx-5 dropdown flex flex-col items-center">
-      <h3>{{ username }}</h3>
-      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-        class="w-6 h-6 text-white">
-        <path stroke-linecap="round" stroke-linejoin="round"
-          d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
+    <div v-else class="mx-5 dropdown flex flex-row items-center">
+      <h3>{{ username }} {{}}</h3>
+      <div class="p-2">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke-width="1.5"
+          stroke="currentColor"
+          class="w-6 h-6 text-white"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
+          />
+        </svg>
+      </div>
       <div class="dropItems">
         <button @click="() => navigateTo('/dashb')" class="dropButton">
           Account
@@ -96,18 +116,19 @@ export default {
 
 .navContainer {
   font-family: "poppins", sans-serif;
-  background-color: rgba(16, 15, 15, 0.9);
+  background-color: #091636;
   box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   height: 100%;
   width: 100%;
-  padding: 0.2% 0;
+  padding: 0.5% 0;
 }
 
 .heading {
-  background-color: #1f4c90;
+  background-color: #16253b;
+  /* box-shadow: #909296; */
   color: white;
   padding: 0.5rem 2rem;
   margin-left: 1%;
@@ -191,6 +212,7 @@ button {
 
 .dropdown {
   display: flex;
+  flex-direction: row-reverse;
   cursor: pointer;
 }
 
@@ -198,7 +220,7 @@ button {
   display: none;
   top: 5.4%;
   position: absolute;
-  box-shadow: 0px 0px 10px 3px #2c56be;
+  box-shadow: 0px 0px 10px 3px #091636;
   background-color: rgb(46, 44, 44);
   z-index: 1;
   border-radius: 0.2rem;
@@ -217,6 +239,8 @@ button {
 
 .dropButton:hover {
   margin: 0;
-  border: 1px solid white;
+  /* border: 1px solid white; */
+  background-color: #ffffff;
+  color: #091636;
 }
 </style> 

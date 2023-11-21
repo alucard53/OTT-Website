@@ -5,25 +5,35 @@
     <div class="box" v-for="(movie, index) in filteredMovies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
-      <h3><b>Title: </b> {{ movie.title }}</h3>
-      <br />
-      <h4><b>Description: </b> {{ movie.desc }}</h4>
-      <br />
-      <h4><b>Year: </b>{{ movie.year }}</h4>
-      <br />
-      <h4><b>Genre: </b>{{ movie.genre }}</h4>
-      <br />
-      <h4><b>Director: </b>{{ movie.director }}</h4>
-      <br />
+      <div class="content">
+        <h3><b>Title: </b> {{ movie.title }}</h3>
+        <br />
+        <h4><b>Description: </b> {{ movie.desc }}</h4>
+        <br />
+        <h4><b>Year: </b>{{ movie.year }}</h4>
+        <br />
+        <h4><b>Genre: </b>{{ movie.genre }}</h4>
+        <br />
+        <h4><b>Director: </b>{{ movie.director }}</h4>
+        <br />
+      </div>
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-if="movie.watchLater">
-        <NuxtLink to="/watchLater">Watch later</NuxtLink>
-      </button>
+      <div class="button">
+        <button
+          class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+          v-if="movie.watchLater"
+        >
+          <NuxtLink to="/watchLater">Watch later</NuxtLink>
+        </button>
 
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" v-else
-        @click="addWatch(index)">
-        Add to Watch later
-      </button>
+        <button
+          class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
+          v-else
+          @click="addWatch(index)"
+        >
+          Add to Watch later
+        </button>
+      </div>
 
       <br />
     </div>
@@ -54,7 +64,7 @@ export default {
         this.movies = await data.json();
       }
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   },
   data() {
@@ -130,7 +140,7 @@ export default {
         }
       }
       for (let movie of this.movies) {
-        console.log(movie.title)
+        console.log(movie.title);
       }
       return this.movies.filter((movie) =>
         movie.title.toLowerCase().includes(this.$route.query.q.toLowerCase())
@@ -142,12 +152,14 @@ export default {
 
 <style >
 .box {
-  border: 1px solid black;
+  /* border: 1px solid black; */
+  background-color: #d9d9d9;
   display: grid;
   justify-content: center;
   align-items: center;
   width: 100%;
-  padding: 10px;
+  padding: 15px;
+  margin: 10px;
 }
 
 .box .img {
@@ -155,5 +167,15 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 20px;
+}
+
+.content {
+  padding: 10px;
+  margin: 10px;
+}
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>

@@ -4,17 +4,22 @@
     <div class="box" v-for="(movie, index) in movies" :key="movie.id">
       <div class="img"><img src="https://picsum.photos/200" /><br /></div>
 
-      <h3><b>Title: </b> {{ movie.title }}</h3>
+      <div class="content">
+        <h3><b>Title: </b> {{ movie.title }}</h3>
+        <br />
+        <h4><b>Description: </b> {{ movie.desc }}</h4>
+        <br />
+        <h4><b>Year: </b>{{ movie.year }}</h4>
+        <br />
+        <h4><b>Genre: </b>{{ movie.genre }}</h4>
+        <br />
+        <h4><b>Director: </b>{{ movie.director }}</h4>
+      </div>
       <br />
-      <h4><b>Description: </b> {{ movie.desc }}</h4>
-      <br />
-      <h4><b>Year: </b>{{ movie.year }}</h4>
-      <br />
-      <h4><b>Genre: </b>{{ movie.genre }}</h4>
-      <br />
-      <h4><b>Director: </b>{{ movie.director }}</h4>
-      <br />
-      <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" @click="removeWatch(index)">
+      <button
+        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        @click="removeWatch(index)"
+      >
         remove from watch later
       </button>
       <br />
@@ -81,7 +86,7 @@ export default {
 
 <style >
 .box {
-  border: 1px solid black;
+  /* border: 1px solid black; */
   display: grid;
   justify-content: center;
   align-items: center;
@@ -94,5 +99,9 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 20px;
+}
+.content {
+  padding: 10px;
+  margin: 10px;
 }
 </style>

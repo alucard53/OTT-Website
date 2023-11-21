@@ -182,7 +182,7 @@ export default {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-color: #1f4c90;
+  background-color: #e2e2e2;
 }
 
 .container {
@@ -229,7 +229,7 @@ export default {
 }
 
 button {
-  background-color: #1f4c90;
+  background-color: #091636;
   color: white;
   padding: 2% 3%;
   border-radius: 4px;

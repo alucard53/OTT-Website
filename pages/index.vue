@@ -145,10 +145,10 @@ export default {
 }
 
 .label {
-  font-weight: 500;
+  font-weight: 600;
   font-size: medium;
   color: white;
-  text-shadow: 1px 1px rgba(255, 255, 255, 0.438);
+  /* text-shadow: 1px 1px rgba(255, 255, 255, 0.438); */
 }
 
 .input {
