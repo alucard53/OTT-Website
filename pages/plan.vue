@@ -1,46 +1,29 @@
 <template>
   <div class="page">
     <div class="container">
-      <span class="font-bold md:text-3xl mt-5"
-        >Choose the right plan for you</span
-      >
+      <span class="font-bold md:text-3xl mt-5">Choose the right plan for you</span>
       <div class="grid grid-rows-1 grid-flow-row">
         <div class="grid grid-cols-5 mb-8 mt-10">
           <div class="plantype">
             <div class="button">
-              <div
-                class="plantypeOpt"
-                :class="monthly"
-                @click="
-                  () => {
-                    yearly = '';
-                    monthly = 'sel';
-                  }
-                "
-              >
+              <div class="plantypeOpt" :class="monthly" @click="() => {
+                yearly = '';
+                monthly = 'sel';
+              }
+                ">
                 Monthly
               </div>
-              <div
-                class="plantypeOpt"
-                :class="yearly"
-                @click="
-                  () => {
-                    monthly = '';
-                    yearly = 'sel';
-                  }
-                "
-              >
+              <div class="plantypeOpt" :class="yearly" @click="() => {
+                monthly = '';
+                yearly = 'sel';
+              }
+                ">
                 Yearly
               </div>
             </div>
           </div>
-          <div
-            v-for="(plan, index) in plans"
-            :key="index"
-            class="planbox"
-            @click="changePlan(index)"
-            :class="selPlan[index]"
-          >
+          <div v-for="(plan, index) in plans" :key="index" class="planbox" @click="changePlan(index)"
+            :class="selPlan[index]">
             {{ plan }}
             <div :class="triangle[index]"></div>
           </div>
@@ -51,12 +34,8 @@
             <span class="labeltext">Monthly Price</span>
           </span>
 
-          <span
-            v-for="(price, index) in prices[yearly === '' ? 0 : 1]"
-            :key="index"
-            class="rowvals"
-            :class="selPlan[index]"
-          >
+          <span v-for="(price, index) in prices[yearly === '' ? 0 : 1]" :key="index" class="rowvals"
+            :class="selPlan[index]">
             <span class="rowval">{{ price }}</span>
           </span>
         </div>
@@ -66,12 +45,7 @@
             <span class="labeltext">Video Quality</span>
           </span>
 
-          <div
-            v-for="(qual, index) in vqual"
-            :key="index"
-            class="rowvals"
-            :class="selPlan[index]"
-          >
+          <div v-for="(qual, index) in vqual" :key="index" class="rowvals" :class="selPlan[index]">
             <span class="rowval">{{ qual }}</span>
           </div>
         </div>
@@ -81,12 +55,7 @@
             <span class="labeltext">Resolution</span>
           </span>
 
-          <div
-            v-for="(r, index) in res"
-            :key="index"
-            class="rowvals"
-            :class="selPlan[index]"
-          >
+          <div v-for="(r, index) in res" :key="index" class="rowvals" :class="selPlan[index]">
             <span class="rowval">{{ r }}</span>
           </div>
         </div>
@@ -96,12 +65,7 @@
             <span class="labeltext">Devices you can use to watch</span>
           </span>
 
-          <div
-            v-for="(devs, index) in devices"
-            :key="index"
-            class="flex flex-col"
-            :class="selPlan[index]"
-          >
+          <div v-for="(devs, index) in devices" :key="index" class="flex flex-col" :class="selPlan[index]">
             <span v-for="(device, j) in devs" :key="j" class="devices">
               {{ device }}
             </span>
@@ -290,5 +254,10 @@ export default {
   font-size: larger;
   border-radius: 5px;
   margin-top: 2%;
+}
+
+.submit:hover {
+  background-color: #213760;
+  transition: all 0.3s ease 0s;
 }
 </style>

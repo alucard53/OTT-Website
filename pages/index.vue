@@ -21,12 +21,7 @@
           <span class="inputGroup">
             <label for="password" class="label"> Password </label>
 
-            <input
-              type="password"
-              class="input"
-              v-model="form.password"
-              required
-            />
+            <input type="password" class="input" v-model="form.password" required />
 
             <label for="remember_me" style="color: #fff">
               <input type="checkbox" />
@@ -34,12 +29,7 @@
             </label>
           </span>
 
-          <img
-            v-if="loading"
-            src="../public/loading.gif"
-            width="50"
-            height="50"
-          />
+          <img v-if="loading" src="../public/loading.gif" width="50" height="50" />
 
           <div v-if="err.length > 0" style="color: red">
             {{ err }}
@@ -167,7 +157,7 @@ export default {
 
 .Submit {
   background-color: #091636;
-  box-shadow: 4px 4px #f5f5f516;
+  box-shadow: 4px 4px 4px #f5f5f516;
   width: 100%;
   padding: 1rem;
   border-radius: 8px;
@@ -177,7 +167,7 @@ export default {
 }
 
 .Submit:hover {
-  box-shadow: 4px 4px #f5f5f585;
+  box-shadow: 4px 4px 4px #f5f5f585;
   background-color: #213760;
   transition: all 0.3s ease 0s;
 }

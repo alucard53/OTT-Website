@@ -11,30 +11,22 @@
         </div>
 
         <div class="flex justify-start">
-          <span
-            class="inline-block rounded bg-primary mx-1 my-4 px-2.5 py-2 text-xs font-bold text-white"
-            :class="substate === 'Active' ? 'bg-blue-950' : 'bg-red-600'"
-          >
+          <span class="inline-block rounded bg-primary mx-1 my-4 px-2.5 py-2 text-xs font-bold text-white"
+            :class="substate === 'Active' ? 'bg-blue-950' : 'bg-red-600'">
             {{ substate }}
           </span>
 
           <div class="flex w-3/6 ml-60 mr-5 justify-end items-center">
-            <button
-              v-if="substate === 'Active'"
+            <button v-if="substate === 'Active'"
               class="border-solid border-2 border-red-700 rounded-md text-red-700 px-2 py-2 ml-5 hover:bg-gray-200"
-              @click="openCancel = true"
-            >
+              @click="openCancel = true">
               Cancel
             </button>
           </div>
 
           <ClientOnly>
             <Teleport to=".page">
-              <CancelConfirm
-                v-if="openCancel"
-                :jwt="token"
-                @close_popup="openCancel = false"
-              />
+              <CancelConfirm v-if="openCancel" :jwt="token" @close_popup="openCancel = false" />
             </Teleport>
           </ClientOnly>
         </div>
@@ -54,9 +46,8 @@
       </div>
 
       <div class="ml-5 mb-1 text-sm">
-        <span v-if="substate === `Active`"
-          >Your plan is active till
-          <span class="text-blue-950">{{ startDate }}</span>
+        <span v-if="substate === `Active`">Your plan is active till
+          <span class="text-blue-950">{{ endDate }}</span>
         </span>
         <span v-else class="text-gray-500">
           Renew your subscription to start watching again!
@@ -65,9 +56,7 @@
 
       <div class="flex flex-row my-2">
         <NuxtLink to="/plan">
-          <button
-            class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2 ml-5 hover:bg-gray-200"
-          >
+          <button class="border-solid border-2 border-blue-900 rounded-md text-blue-900 px-2 py-2 ml-5 hover:bg-gray-200">
             {{ substate === "Active" ? "Change" : "Renew" }} Plan
           </button>
         </NuxtLink>
@@ -84,20 +73,21 @@ import CancelConfirm from "~/components/CancelConfirm.vue";
 export default {
   async mounted() {
     const store = userStore();
+
     this.substate = store.user.substate;
-    this.plan = store.plans[store.user.plan];
-    this.billing = store.billing[store.user.billing];
+    this.plan = store.plans[store.sub.plan];
+    this.billing = store.billing[store.sub.billing];
     this.price =
-      store.prices[store.user.billing][store.user.plan].toString() +
+      store.prices[store.sub.billing][store.sub.plan].toString() +
       (this.billing === "Monthly" ? "/mo" : "/yr");
     this.devices = "";
-    store.devices[store.user.plan].forEach((element) => {
+    store.devices[store.sub.plan].forEach((element) => {
       this.devices += element + "+";
     });
-    if (!store.user.startDate) {
-      this.startDate = Date.now();
+    if (!store.user.endDate) {
+      console.log("No date found")
     } else {
-      this.startDate = store.user.startDate.substring(0, 10);
+      this.endDate = store.user.endDate.substring(0, 10);
     }
     this.token = store.user.token;
   },
@@ -108,7 +98,7 @@ export default {
       billing: "",
       devices: "",
       price: 0,
-      startDate: "",
+      endDate: "",
       openCancel: false,
       blurPage: "",
       token: {},

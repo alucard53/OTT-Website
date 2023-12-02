@@ -3,7 +3,9 @@
   <FilterBar />
   <div class="grid grid-cols-3 gap-4 m-5">
     <div class="box" v-for="(movie, index) in filteredMovies" :key="movie.id">
-      <div class="img"><img src="https://picsum.photos/200" /><br /></div>
+      <NuxtLink :to="`/movies/${movie.id}`">
+        <div class="img"><img src="https://picsum.photos/200" /><br /></div>
+      </NuxtLink>
 
       <div class="content">
         <h3><b>Title: </b> {{ movie.title }}</h3>
@@ -19,18 +21,12 @@
       </div>
 
       <div class="button">
-        <button
-          class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-          v-if="movie.watchLater"
-        >
+        <button class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" v-if="movie.watchLater">
           <NuxtLink to="/watchLater">Watch later</NuxtLink>
         </button>
 
-        <button
-          class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded"
-          v-else
-          @click="addWatch(index)"
-        >
+        <button class="bg-blue-950 hover:bg-blue-900 text-white font-bold py-2 px-4 rounded" v-else
+          @click="addWatch(index)">
           Add to Watch later
         </button>
       </div>
@@ -173,6 +169,7 @@ export default {
   padding: 10px;
   margin: 10px;
 }
+
 .button {
   display: flex;
   justify-content: center;

@@ -1,13 +1,7 @@
 <template>
   <div class="navContainer">
-    <!-- <nav v-if="mounted === false">
-      <ul class="nav_link">
-        <li><button @click="() => navigateTo('/')">Sign Up</button></li>
-        <li><button @click="() => navigateTo('/login')">Log In</button></li>
-      </ul>
-    </nav> -->
 
-    <div class="mx-5 pl-10 dropdown flex flex-col items-center">
+    <div class="mx-5 pl-10 flex flex-row items-center cursor-pointer dropdown">
       <button>Genre</button>
 
       <div class="dropItems">
@@ -26,19 +20,10 @@
     <div class="mx-5 dropdown flex flex-col items-center">
       <div class="sort">
         <button>sort by fit</button>
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke-width="1.5"
-          stroke="currentColor"
-          class="w-6 h-6"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+          class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round"
+            d="M10.5 6h9.75M10.5 6a1.5 1.5 0 11-3 0m3 0a1.5 1.5 0 10-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m-9.75 0h9.75" />
         </svg>
       </div>
 
@@ -105,11 +90,6 @@ button {
   margin: 8px;
 }
 
-.dropdown {
-  display: flex;
-  cursor: pointer;
-  flex-direction: row;
-}
 
 .dropItems {
   display: none;
@@ -122,11 +102,10 @@ button {
 }
 
 .dropdown:hover .dropItems {
+  text-align: center;
   display: flex;
   flex-direction: column;
-  /* padding: 0 1.5%; */
   overflow: hidden;
-  width: 13rem;
 }
 
 /* .dropItems:first-child {
@@ -135,6 +114,8 @@ button {
 
 .dropButton {
   margin: 1px;
+  width: 100%;
+  padding: 0 1rem;
 }
 
 .dropButton:hover {
@@ -143,10 +124,13 @@ button {
   background-color: #ffffff;
   color: #091636;
 }
+
 .sort {
   display: flex;
   flex-direction: row;
+  align-items: center;
 }
+
 .sort svg {
   width: 35px;
   height: 35px;

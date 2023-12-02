@@ -4,9 +4,7 @@
     <form class="container" v-if="!loading">
       <div class="left">
         <span class="headingl">Complete Payment</span>
-        <span class="instruc"
-          >Enter your credit or debit card details below</span
-        >
+        <span class="instruc">Enter your credit or debit card details below</span>
         <div>
           <label>
             <div id="card-element" class="field card"></div>
@@ -65,6 +63,7 @@ export default {
       this.store.prices[this.store.sub.billing][
         this.store.sub.plan
       ].toString() + (this.billing === "Monthly" ? "/mo" : "/yr");
+
     if (this.store.user.stripeID !== "") {
       try {
         const res = await fetch("http://localhost:6969/pay", {
@@ -78,19 +77,21 @@ export default {
             "Content-Type": "application/json",
           },
         });
+
         this.loading = false;
+
         if (res.status === 500) {
           console.log("Error in creating subscription");
-        } else if (res.status === 206) {
+        } else if (res.status === 206) { // needs payment
           const data = await res.json();
           clientSecret = data.secret;
-        } else {
-          const d = new Date();
+        } else { // doesn't need payment
+          const endDate = (await res.json()).date.substring(0, 10)
           this.store.setUser({
             plan: this.store.sub.plan,
             substate: "Active",
             billing: this.store.sub.billing,
-            startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`,
+            endDate,
           });
           navigateTo("/dashb");
         }
@@ -155,19 +156,18 @@ export default {
           method: "POST",
           body: JSON.stringify({
             email: this.store.user.email,
-            plan: this.store.sub.plan,
-            billing: this.store.sub.billing,
           }),
           headers: {
             "Content-Type": "application/json",
           },
         });
-        const d = new Date();
+        const data = await res.json()
+        const endDate = data.date.substring(0, 10)
         this.store.setUser({
           plan: this.store.sub.plan,
           substate: "Active",
           billing: this.store.sub.billing,
-          startDate: `${d.getDate()}:${d.getMonth()}:${d.getFullYear()}`,
+          endDate,
         });
         navigateTo("/dashb");
       }
