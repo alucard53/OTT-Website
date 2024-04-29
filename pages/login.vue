@@ -32,7 +32,7 @@
         <button type="submit" class="Submit">Sign In</button>
 
         <p style="font-weight: 500; color: #fff">
-          New to My-App?
+          New here?
           <NuxtLink to="/" style="color: #8597ab">Sign Up</NuxtLink>
         </p>
       </form>
@@ -184,6 +184,7 @@ export default {
   border-radius: 8px;
   margin: 5%;
   font-size: larger;
+  font-weight: 500;
   color: white;
 }
 

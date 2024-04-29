@@ -70,10 +70,10 @@ export default {
   },
   methods: {
     async addWatch(i) {
-      this.movies[i].watchLater = true;
+      this.filteredMovies[i].watchLater = true;
 
       const res = await fetch(
-        `http://localhost:6969/addWatch?movie=${this.movies[i].id}`,
+        `http://localhost:6969/addWatch?movie=${this.filteredMovies[i].id}`,
         {
           method: "POST",
           headers: {

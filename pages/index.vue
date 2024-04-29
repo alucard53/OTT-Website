@@ -164,6 +164,7 @@ export default {
   margin: 5%;
   font-size: larger;
   color: white;
+  font-weight: 500;
 }
 
 .Submit:hover {

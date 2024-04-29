@@ -3,7 +3,7 @@
   <div class="page">
     <div class="container">
       <div class="video">
-        <video controls width="1560" height="1000" id="video">
+        <video controls width="1000" height="1000" id="video">
         </video>
       </div>
       <div class="flex flex-col w-full mt-10 p-8 bg-gray-800 rounded-md text-white ">
@@ -45,6 +45,8 @@ export default {
       this.movie = await res.json()
       video.src = `http://localhost:5000/video/${this.id}`
       video.play()
+    } else {
+        navigateTo('/dashb')
     }
   },
 
