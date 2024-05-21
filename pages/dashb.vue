@@ -2,7 +2,7 @@
   <NavbarComponent />
 
   <div class="page">
-    <div class="flex flex-col p-5 m-3 bg-white rounded-mdi">
+    <div class="flex flex-col p-5 m-3 bg-white rounded-lg">
       <div class="flex flex-row">
         <div class="flex align-middle px-5 justify-start items-center">
           <span class="text-xl font-medium leading-tight">
@@ -12,12 +12,12 @@
 
         <div class="flex justify-start">
           <span class="inline-block rounded bg-primary mx-1 my-4 px-2.5 py-2 text-xs font-bold text-white"
-            :class="substate === 'Active' ? 'bg-blue-950' : 'bg-red-600'">
+            :class="substate === 'active' ? 'bg-blue-950' : 'bg-red-600'">
             {{ substate }}
           </span>
 
           <div class="flex w-3/6 ml-60 mr-5 justify-end items-center">
-            <button v-if="substate === 'Active'"
+            <button v-if="substate === 'active'"
               class="border-solid border-2 border-red-700 rounded-md text-red-700 px-2 py-2 ml-5 hover:bg-gray-200"
               @click="openCancel = true">
               Cancel
@@ -26,7 +26,7 @@
 
           <ClientOnly>
             <Teleport to=".page">
-              <CancelConfirm v-if="openCancel" :jwt="token" @close_popup="openCancel = false" />
+              <CancelConfirm v-if="openCancel" @close_popup="openCancel = false" />
             </Teleport>
           </ClientOnly>
         </div>
@@ -74,22 +74,26 @@ export default {
   async mounted() {
     const store = userStore();
 
-    this.substate = store.user.substate;
-    this.plan = store.plans[store.sub.plan];
-    this.billing = store.billing[store.sub.billing];
+    const res = await fetch(`http://localhost:6969/getSub/${store.user.email}`, {
+      headers: {
+        "Authorization": `Bearer ${store.user.token}`
+      }
+    })
+
+    const user = await res.json()
+
+    this.substate = user.substate;
+    this.plan = store.plans[user.plan];
+    this.billing = store.billing[user.billing];
     this.price =
-      store.prices[store.sub.billing][store.sub.plan].toString() +
+      store.prices[user.billing][user.plan].toString() +
       (this.billing === "Monthly" ? "/mo" : "/yr");
     this.devices = "";
     store.devices[store.sub.plan].forEach((element) => {
       this.devices += element + "+";
     });
-    if (!store.user.endDate) {
-      console.log("No date found")
-    } else {
-      this.endDate = store.user.endDate.substring(0, 10);
-    }
-    this.token = store.user.token;
+
+    this.endDate = user.endDate.substring(0, 10);
   },
   data() {
     return {

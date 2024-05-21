@@ -82,8 +82,6 @@ export default {
     this.store = userStore();
     this.username = this.store.user.name;
 
-    console.log(this.store.user);
-
     if (this.username === "") {
       this.mounted = false;
     } else {

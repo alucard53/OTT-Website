@@ -10,11 +10,7 @@ export const userStore = defineStore("userStore", {
     let user = {
       name: "",
       email: "",
-      plan: 0,
       token: "",
-      substate: "None",
-      billing: 0,
-      endDate: "",
     };
 
     return {
@@ -39,21 +35,16 @@ export const userStore = defineStore("userStore", {
       this.sub = newSub;
     },
     setUser(newUser) {
-
       if (!newUser) {
         this.user = {
           name: "",
           email: "",
-          plan: 0,
           token: "",
-          substate: "None",
-          billing: 0,
-          endDate: "",
-        }
-        return
+        };
+        return;
       }
 
-      if (this.user.name === '') {
+      if (this.user.name === "") {
         this.user.name = newUser.name;
       }
 
@@ -64,16 +55,6 @@ export const userStore = defineStore("userStore", {
       if (newUser.token) {
         this.user.token = newUser.token;
       }
-
-
-      if (newUser.substate && newUser.substate !== "") {
-        this.user.substate = newUser.substate;
-      }
-
-      if (newUser.endDate) {
-        this.user.endDate = newUser.endDate;
-      }
-
     },
   },
   persist: {

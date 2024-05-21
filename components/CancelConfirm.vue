@@ -20,7 +20,6 @@
 import { userStore } from '~/stores/userStore'
 
 export default {
-  props: ['jwt'],
 
   setup(props) {
     console.log(props)
@@ -54,8 +53,6 @@ export default {
           method: "GET",
         })
         if (res.status === 200) {
-          this.store.user.substate = "Inactive"
-          this.store.setUser(this.store.user)
           window.location.reload()
         } else {
           console.log("error in cancelling sub")

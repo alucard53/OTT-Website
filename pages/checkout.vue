@@ -64,6 +64,8 @@ export default {
         this.store.sub.plan
       ].toString() + (this.billing === "Monthly" ? "/mo" : "/yr");
 
+    // If payment was initiated previously
+    console.log(this.store.user.token)
     if (this.store.user.stripeID !== "") {
       try {
         const res = await fetch("http://localhost:6969/pay", {
@@ -75,18 +77,19 @@ export default {
           }),
           headers: {
             "Content-Type": "application/json",
+            "Authorization": `Bearer ${this.store.user.token}`
           },
         });
 
         this.loading = false;
 
+        const data = await res.json();
         if (res.status === 500) {
           console.log("Error in creating subscription");
         } else if (res.status === 206) { // needs payment
-          const data = await res.json();
           clientSecret = data.secret;
         } else { // doesn't need payment
-          const endDate = (await res.json()).date.substring(0, 10)
+          const endDate = data.date.substring(0, 10)
           this.store.setUser({
             plan: this.store.sub.plan,
             substate: "Active",
@@ -158,6 +161,7 @@ export default {
             email: this.store.user.email,
           }),
           headers: {
+            "Authorization": `Bearer ${this.store.user.token}`,
             "Content-Type": "application/json",
           },
         });
