@@ -3,17 +3,6 @@
     <div class="heading">
       <h3>OTT - Platform</h3>
     </div>
-    <div class="text-white flex gap-2">
-      <span class="p-2 m-1" @click="handleSubmit">
-        <h3>Home</h3>
-      </span>
-      <span class="p-2 m-1" @click="handleSubmit">
-        <h3>Movies</h3>
-      </span>
-      <span class="p-2 m-1" @click="handleSubmit">
-        <h3>Tv Shows</h3>
-      </span>
-    </div>
 
     <div class="search">
       <svg
@@ -126,7 +115,6 @@ export default {
 
 .heading {
   background-color: #16253b;
-  /* box-shadow: #909296; */
   color: white;
   padding: 0.5rem 2rem;
   margin-left: 1%;
@@ -169,7 +157,6 @@ button {
 .search {
   display: flex;
   align-items: center;
-  margin: 0 2rem;
 }
 
 .search input {
@@ -177,9 +164,9 @@ button {
   border: none;
   color: white;
   background-color: rgba(54, 53, 53, 0.2);
-  width: 90%;
   box-shadow: none;
   border-radius: 12.5px;
+  width: 120%;
 }
 
 .navContainer .search input:focus {
@@ -198,7 +185,6 @@ button {
 .navContainer .search {
   position: relative;
   height: 100%;
-  width: 30rem;
   border: 1px solid none;
   background-color: rgba(124, 119, 119, 0.2);
   font-size: 20px;
@@ -206,6 +192,7 @@ button {
   border-radius: 25px;
   color: white;
   display: flex;
+  width: 20%;
 }
 
 .dropdown {
